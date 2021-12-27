@@ -1,5 +1,6 @@
 package com.hqd.schoolnavigation.service;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hqd.schoolnavigation.domain.School;
@@ -30,6 +31,40 @@ public class SchoolService {
     public void getAllSchool(PageDto pageDto)
     {
         schoolExample=new SchoolExample();
+        SchoolList(pageDto,schoolExample);
+
+    }
+    public void addSchool(SchoolDto schoolDto) {
+        School school = BeanCopyUtils.copyBean(schoolDto, School.class);
+        int insert = schoolMapper.insert(school);
+    }
+    public void deleteSchool(Integer id){
+        schoolMapper.deleteByPrimaryKey(id);
+    }
+    public void getSchoolByType(String type,PageDto pageDto)
+    {
+        schoolExample=new SchoolExample();
+        SchoolExample.Criteria criteria = schoolExample.createCriteria().andTypeEqualTo(type);
+        schoolExample.or(criteria);
+        SchoolList(pageDto,schoolExample);
+    }
+    public void getLikeSchool(String filterName,PageDto pageDto){
+        String filter="%"+filterName+"%";
+        schoolExample=new SchoolExample();
+        final SchoolExample.Criteria criteria = schoolExample.or().andNameLike(filter);
+        final SchoolExample.Criteria criteria1 = schoolExample.or().andLevelLike(filter);
+        schoolExample.or(criteria1);
+        SchoolList(pageDto,schoolExample);
+    }
+    public void updateSchool(SchoolDto schoolDto)
+    {
+        schoolExample=new SchoolExample();
+        School school = BeanCopyUtils.copyBean(schoolDto, School.class);
+        schoolMapper.updateByPrimaryKeySelective(school);
+
+    }
+    public void SchoolList(PageDto pageDto,SchoolExample schoolExample)
+    {
         PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
         List<School> schools = schoolMapper.selectByExample(schoolExample);
         PageInfo<School> pageInfo=new PageInfo<>(schools);
@@ -37,7 +72,5 @@ public class SchoolService {
         pageDto.setTotal((int) pageInfo.getTotal());
         pageDto.setData(schoolDtos);
     }
-    public void addSchool(){
 
-    }
 }
