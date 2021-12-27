@@ -1,0 +1,1 @@
+COURSE_CHARGE={CHARGE:{key:"C", value:"收费"},FREE:{key:"F", value:"免费"}};
