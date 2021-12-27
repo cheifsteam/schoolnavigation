@@ -2,13 +2,20 @@
 <!DOCTYPE generatorConfiguration
         PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
 <generatorConfiguration>
+
     <!--导入属性配置-->
     <properties resource="application.properties"></properties>
+    <!--覆盖生成XML文件-->
+
 
     <!-- 指定数据库驱动的jdbc驱动jar包的位置 -->
 
     <context id="DB2tables" targetRuntime="Mybatis3">
+
+        <!--覆盖生成XML文件-->
+        <plugin type="org.mybatis.generator.plugins.UnmergeableXmlMappersPlugin" />
         <commentGenerator>
             <property name="suppressDate" value="true"/>
             <property name="suppressAllComments" value="true"/>
@@ -16,6 +23,8 @@
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/schoolnavigation?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true"
                         userId="root" password="qwer123+456">
+
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <!--类型转换-->
         <javaTypeResolver>
@@ -35,10 +44,17 @@
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.hqd.schoolnavigation.mapper" targetProject="src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
+
         <!--生成对应表及类名-->
-        <table tableName="user" domainObjectName="UserInfo" enableCountByExample="true"
-               enableUpdateByExample="true" enableDeleteByExample="true" enableSelectByExample="true"
+        <table tableName="user" domainObjectName="User" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>
+        <table tableName="school" domainObjectName="School" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
+
+
     </context>
 </generatorConfiguration>
