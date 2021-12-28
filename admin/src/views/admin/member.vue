@@ -225,7 +225,7 @@
 import Pagination from "../../components/pagination";
 export default {
   components: {Pagination},
-  name: "business-school",
+  name: "business-member",
   data: function() {
     return {
       school: {},
