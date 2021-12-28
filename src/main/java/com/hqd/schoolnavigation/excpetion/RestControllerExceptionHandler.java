@@ -26,10 +26,10 @@ public class RestControllerExceptionHandler {
     /**
      * 处理BaseException类(及其子类)的异常
      */
-//    @ExceptionHandler({ MyException.class })
-//    public AjaxResult  baseExceptionHandler() {
-//        return new AjaxResult();
-//    }
+    @ExceptionHandler({ MyException.class })
+    public AjaxResult  baseExceptionHandler(MyException e) {
+        return AjaxResult.error(e.getCode(),e.getMsg());
+    }
 
     /**
      * 处理Exception类的异常

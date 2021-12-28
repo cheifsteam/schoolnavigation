@@ -1,6 +1,5 @@
 package com.hqd.schoolnavigation.service;
 
-import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hqd.schoolnavigation.domain.School;
@@ -8,12 +7,10 @@ import com.hqd.schoolnavigation.domain.SchoolExample;
 import com.hqd.schoolnavigation.dto.PageDto;
 import com.hqd.schoolnavigation.dto.SchoolDto;
 import com.hqd.schoolnavigation.mapper.SchoolMapper;
-import com.hqd.schoolnavigation.util.BeanCopyUtils;
+import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

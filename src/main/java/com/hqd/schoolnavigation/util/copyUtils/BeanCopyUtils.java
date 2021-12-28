@@ -1,10 +1,9 @@
-package com.hqd.schoolnavigation.util;
+package com.hqd.schoolnavigation.util.copyUtils;
 
 import org.springframework.beans.BeanUtils;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.function.Supplier;
 

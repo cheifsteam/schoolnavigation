@@ -12,8 +12,6 @@ public class AdminDto {
 
     private String password;
 
-    private String salt;
-
     private String img;
 
     public Integer getId() {
@@ -40,13 +38,6 @@ public class AdminDto {
         this.password = password == null ? null : password.trim();
     }
 
-    public String getSalt() {
-        return salt;
-    }
-
-    public void setSalt(String salt) {
-        this.salt = salt == null ? null : salt.trim();
-    }
 
     public String getImg() {
         return img;

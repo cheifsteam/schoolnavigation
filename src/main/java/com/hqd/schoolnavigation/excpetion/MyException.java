@@ -15,6 +15,13 @@ public class MyException extends RuntimeException {
         this.code = code;
         this.msg = msg;
     }
+    //一般异常
+    public MyException(String msg)
+    {
+        this(500,msg);
+    }
+
+
     public int getCode() {
         return code;
     }

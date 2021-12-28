@@ -5,8 +5,11 @@ import com.hqd.schoolnavigation.domain.Admin;
 import com.hqd.schoolnavigation.domain.AdminExample;
 import com.hqd.schoolnavigation.dto.AdminDto;
 import com.hqd.schoolnavigation.dto.PageDto;
+import com.hqd.schoolnavigation.excpetion.MyException;
 import com.hqd.schoolnavigation.mapper.AdminMapper;
-import com.hqd.schoolnavigation.util.BeanCopyUtils;
+import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
+import com.hqd.schoolnavigation.util.security.Encrypt;
+import com.hqd.schoolnavigation.util.security.SecurityRandom;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -23,10 +26,16 @@ public class AdminService {
     public AdminMapper adminMapper;
     private AdminExample adminExample;
     //添加管理员
-    public void addAdmin(AdminDto adminDto){
-
+    public void addAdmin(AdminDto adminDto) {
         Admin admin = BeanCopyUtils.copyBean(adminDto, Admin.class);
-        adminMapper.insert(admin);
+        if (!isExistAdmin(admin.getAdminName())) {
+            throw new MyException("该管理员已经存在");
+        } else {
+            admin.setSalt(SecurityRandom.getRandom());
+            String encryptPassword = Encrypt.MD5Encrypt(admin.getPassword() + admin.getSalt());
+            admin.setPassword(encryptPassword);
+            adminMapper.insert(admin);
+        }
     }
     //删除管理员
     public void deleteAdmin(Integer id)
@@ -42,5 +51,17 @@ public class AdminService {
         PageInfo<AdminDto> pageInfo=new PageInfo<>(adminDtos);
         pageDto.setTotal((int) pageInfo.getTotal());
         pageDto.setData(adminDtos);
+    }
+    public boolean isExistAdmin(String name)
+    {
+        adminExample=new AdminExample();
+        AdminExample.Criteria criteria = adminExample.createCriteria().andAdminNameEqualTo(name);
+        adminExample.or(criteria);
+        List<Admin> admins = adminMapper.selectByExample(adminExample);
+        if (admins.size()==0)
+        {
+            return true;
+        }
+        return false;
     }
 }
