@@ -7,6 +7,8 @@
             <div class="center">
               <h1>
                 <i class="ace-icon fa fa-leaf green"></i>
+                <span class="">hqd学校导航系统</span>
+                <br>
                 <span class="">控台登录</span>
               </h1>
             </div>
@@ -19,7 +21,7 @@
                   <div class="widget-main">
                     <h4 class="header blue lighter bigger">
                       <i class="ace-icon fa fa-coffee green"></i>
-                      请输入用户名密码
+                      请输入用户名和密码
                     </h4>
 
                     <div class="space-6"></div>
@@ -28,14 +30,14 @@
                       <fieldset>
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="Username" />
+															<input type="text" class="form-control" placeholder="账号" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                         </label>
 
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="Password" />
+															<input type="password" class="form-control" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                         </label>
@@ -74,9 +76,13 @@
 </template>
 
 <script>
-$('body').attr('class', 'login-layout light-login');
 export default {
   name: 'login',
+  mounted:function() {
+    $('body').removeClass('no-skin');
+    $('body').attr('class', 'login-layout light-login');
+    //console.log("login");
+  },
   methods: {
     login(){
       this.$router.push("/welcome")

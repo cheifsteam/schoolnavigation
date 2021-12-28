@@ -5,6 +5,7 @@ import Admin from './views/admin.vue'
 import Welcome from './views/admin/welcome.vue'
 import School from './views/admin/school.vue'
 import Category from './views/admin/category.vue'
+import Member from './views/admin/member.vue'
 
 Vue.use(Router);
 
@@ -35,10 +36,14 @@ export default new Router({
       path: "admin/school",
       name: "admin/school",
       component: School,
-    },{
+    }, {
       path: "admin/category",
       name: "admin/category",
       component: Category
+    }, {
+      path: "admin/member",
+      name: "admin/member",
+      component: Member
     }]
   }]
 })
