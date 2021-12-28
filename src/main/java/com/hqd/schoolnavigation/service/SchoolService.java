@@ -66,7 +66,7 @@ public class SchoolService {
     public void SchoolList(PageDto pageDto,SchoolExample schoolExample)
     {
         PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
-        List<School> schools = schoolMapper.selectByExample(schoolExample);
+        List<School> schools = schoolMapper.selectByExampleWithBLOBs(schoolExample);
         PageInfo<School> pageInfo=new PageInfo<>(schools);
         List<SchoolDto> schoolDtos = BeanCopyUtils.copyListProperties(schools,SchoolDto::new);
         pageDto.setTotal((int) pageInfo.getTotal());

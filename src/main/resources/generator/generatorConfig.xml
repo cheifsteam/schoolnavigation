@@ -7,10 +7,7 @@
 
     <!--导入属性配置-->
     <properties resource="application.properties"></properties>
-    <!--覆盖生成XML文件-->
 
-
-    <!-- 指定数据库驱动的jdbc驱动jar包的位置 -->
 
     <context id="DB2tables" targetRuntime="Mybatis3">
 
@@ -23,7 +20,7 @@
 
         <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/schoolnavigation?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true"
                         userId="root" password="qwer123+456">
-
+<!--           防止MyBatis Generator 生成器把其他数据库的同名表生成下来-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <!--类型转换-->
@@ -54,7 +51,9 @@
                enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
                selectByExampleQueryId="true">
         </table>
-
-
+        <table tableName="admin" domainObjectName="Admin" enableCountByExample="false"
+               enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="true"
+               selectByExampleQueryId="true">
+        </table>
     </context>
 </generatorConfiguration>

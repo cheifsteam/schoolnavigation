@@ -6,7 +6,8 @@ package com.hqd.schoolnavigation.excpetion;
  * @project
  */
 
-import com.hqd.schoolnavigation.dto.ResponseDto;
+import com.hqd.schoolnavigation.dto.AjaxResult;
+import com.hqd.schoolnavigation.dto.AjaxResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -25,17 +26,17 @@ public class RestControllerExceptionHandler {
     /**
      * 处理BaseException类(及其子类)的异常
      */
-    @ExceptionHandler({ MyException.class })
-    public ResponseDto baseExceptionHandler(MyException e) {
-        return new ResponseDto<>(e);
-    }
+//    @ExceptionHandler({ MyException.class })
+//    public AjaxResult  baseExceptionHandler() {
+//        return new AjaxResult();
+//    }
 
     /**
      * 处理Exception类的异常
      */
     @ExceptionHandler({ Exception.class })
-    public ResponseDto exceptionHandler(Exception e) {
-        return new ResponseDto<>(e);
+    public AjaxResult exceptionHandler() {
+        return AjaxResult.error();
     }
 }
 
