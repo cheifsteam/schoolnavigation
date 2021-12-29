@@ -127,6 +127,9 @@ public class AjaxResult extends HashMap<String, Object>
     {
         return AjaxResult.error(msg, null);
     }
+    public static AjaxResult unauthorizedError(){
+        return AjaxResult.error(401,"没有权限");
+    }
 
     /**
      * 返回错误消息

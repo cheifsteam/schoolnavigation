@@ -1,10 +1,13 @@
 package com.hqd.schoolnavigation.Redis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.EnableCaching;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -15,7 +18,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 public class RedisCache
 {
-    @Autowired
+    @Resource
     public RedisTemplate redisTemplate;
 
     /**
@@ -52,6 +55,10 @@ public class RedisCache
     public <T> void setCacheObject(final String key, final T value, final Integer timeout, final TimeUnit timeUnit)
     {
         redisTemplate.opsForValue().set(key, value, timeout, timeUnit);
+    }
+    public <T> void setCacheObject(final String key, final T value, final long timeout)
+    {
+        redisTemplate.opsForValue().set(key, value, timeout, TimeUnit.SECONDS);
     }
 
     /**

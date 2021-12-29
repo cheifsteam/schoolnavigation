@@ -1,6 +1,8 @@
 package com.hqd.schoolnavigation.config;
 
 //import com.hqd.schoolnavigation.util.handler.UserSecurityHandlerInterceptor;
+//import com.hqd.schoolnavigation.util.handler.UserSecurityHandlerInterceptor;
+import com.hqd.schoolnavigation.util.handler.UserSecurityHandlerInterceptor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
@@ -32,18 +34,25 @@ public class WebConfig {
                         .allowedHeaders("*")
                         .maxAge(3600);
             }
-//            //注册拦截器
-//            @Override
-//            public void addInterceptors(InterceptorRegistry registry) {
-//                registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns("/login", "/dev/**");
-//            }
+            //注册拦截器
+            @Override
+            public void addInterceptors(InterceptorRegistry registry) {
+                String[] addPath={
+                        "/admin/**"
+                };
+                String[] excPath={
+                        "/admin/admin/login"
+                };
+
+                registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excPath);
+            }
         };
     }
-//    //定义拦截器，UserSecurityHandlerInterceptor这个类实现了HandlerInterceptor接口
-//    @Bean
-//    public UserSecurityHandlerInterceptor userSecurityHandlerInterceptor() {
-//        return new UserSecurityHandlerInterceptor();
-//    }
+    //定义拦截器，UserSecurityHandlerInterceptor这个类实现了HandlerInterceptor接口
+    @Bean
+    public UserSecurityHandlerInterceptor userSecurityHandlerInterceptor() {
+        return new UserSecurityHandlerInterceptor();
+    }
 
 }
 
