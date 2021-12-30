@@ -35,7 +35,7 @@ public class AdminController {
         adminService.deleteAdmin(id);
         return AjaxResult.success();
     }
-    @GetMapping("/admin/admin/getAll")
+    @PostMapping("/admin/admin/getAll")
     public AjaxResult getAllAdmin(@RequestBody  PageDto pageDto)
     {
         adminService.getAllAdmins(pageDto);

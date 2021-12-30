@@ -42,9 +42,8 @@ public class AdminService {
 
         }
         else {
-
             admin.setSalt(SecurityRandom.getRandom());
-            String encryptPassword = Encrypt.MD5Encrypt(admin.getPassword() + admin.getSalt());
+            String encryptPassword = Encrypt.MD5Encrypt(admin.getPassword()+admin.getSalt());
             admin.setPassword(encryptPassword);
             adminMapper.insert(admin);
         }
@@ -70,7 +69,8 @@ public class AdminService {
         if (admin==null){
             throw new MyException("账号错误");
         }
-        if ((admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getPassword()))))
+        String s=Encrypt.MD5Encrypt(adminDto.getPassword()+admin.getSalt());
+        if(!(admin.getPassword().equals(s)))
         {
             throw new MyException("密码错误");
         }

@@ -134,8 +134,28 @@ public class UserService {
         user.setImg(userDto.getImg());
         userMapper.updateByPrimaryKeySelective(user);
     }
-//    public void Register(UserDto userDto){
-//
-//    }
+    public void Register(UserDto userDto){
+    if (userDto.getPhoneNumber().length()!=11)
+    {
+       throw new MyException("手机号长度为11位");
+    }
+    if (userDto.getPassword().length()<6)
+    {
+        throw new MyException("密码长度不能少于6位");
+    }
+    if (!(userDto.getPasswordConfirm().equals(userDto.getPassword())))
+    {
+        throw new MyException("两次输入的密码不一致");
+    }
+    if (userDto.getNickname()==null)
+    {
+        throw new MyException("呢称不能为空");
+    }
+    final User user = BeanCopyUtils.copyBean(userDto, User.class);
+    user.setSalt(SecurityRandom.getRandom());
+    user.setPassword(user.getPassword()+user.getSalt());
+    userMapper.insert(user);
+
+    }
 
 }

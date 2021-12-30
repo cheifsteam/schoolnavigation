@@ -13,8 +13,8 @@ public class SecurityRandom {
    public static String getRandom()
    {
        SecureRandom random = new SecureRandom();
-       byte bytes[] = new byte[24];
-       random.setSeed(System.currentTimeMillis());  //使用系统时间作为种子
+       byte bytes[] = new byte[8];
+       random.setSeed(200);  //使用系统时间作为种子
        random.nextBytes(bytes);
        String securityNum = org.apache.commons.codec.binary.Base64.encodeBase64String(bytes);
        return securityNum;

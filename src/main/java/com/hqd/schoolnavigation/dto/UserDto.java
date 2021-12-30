@@ -16,6 +16,9 @@ public class UserDto {
     private String nickname;
 
     private String salt;
+    private String img;
+    private String passwordConfirm;
+    private String newPassword;
 
     public String getPhoneNumber() {
         return phoneNumber;
@@ -41,9 +44,7 @@ public class UserDto {
         this.salt = salt;
     }
 
-    private String img;
-    private String passwordConfirm;
-    private String newPassword;
+
 
     public Integer getId() {
         return id;

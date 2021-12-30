@@ -60,4 +60,16 @@ public class Admin {
     public void setNickname(String nickname) {
         this.nickname = nickname == null ? null : nickname.trim();
     }
+
+    @Override
+    public String toString() {
+        return "Admin{" +
+                "id=" + id +
+                ", adminName='" + adminName + '\'' +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", img='" + img + '\'' +
+                ", nickname='" + nickname + '\'' +
+                '}';
+    }
 }
