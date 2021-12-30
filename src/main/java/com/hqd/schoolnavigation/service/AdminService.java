@@ -1,5 +1,6 @@
 package com.hqd.schoolnavigation.service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hqd.schoolnavigation.domain.Admin;
 import com.hqd.schoolnavigation.domain.AdminExample;
@@ -58,6 +59,7 @@ public class AdminService {
     public void getAllAdmins(PageDto pageDto)
     {
         adminExample=new AdminExample();
+        PageHelper.startPage(pageDto.getPage(),pageDto.getPageSize());
         List<Admin> admins = adminMapper.selectByExample(adminExample);
         List<AdminDto> adminDtos = BeanCopyUtils.copyListProperties(admins, AdminDto::new);
         PageInfo<AdminDto> pageInfo=new PageInfo<>(adminDtos);
@@ -65,7 +67,7 @@ public class AdminService {
         pageDto.setData(adminDtos);
     }
     public String AdminLogin(AdminDto adminDto){
-         Admin admin = getAdminByName(adminDto.getAdminName());
+        Admin admin = getAdminByName(adminDto.getAdminName());
         if (admin==null){
             throw new MyException("账号错误");
         }
@@ -80,31 +82,34 @@ public class AdminService {
         return token;
     }
     public void SignOut(){
-            Integer userid = (Integer) httpSession.getAttribute("id");
-            webTokenUtil.deleteToken(userid);
+        Integer userid = (Integer) httpSession.getAttribute("id");
+        webTokenUtil.deleteToken(userid);
+    }
+    public void UpdatePassword(AdminDto adminDto){
+        Integer id = (Integer) httpSession.getAttribute("id");
+        Admin admin = adminMapper.selectByPrimaryKey(id);
+        if (admin==null)
+        {
+            throw new MyException("管理员不存在");
         }
-        public void UpdatePassword(AdminDto adminDto){
-            Integer id = (Integer) httpSession.getAttribute("id");
-            Admin admin = adminMapper.selectByPrimaryKey(id);
-            if (admin==null)
-            {
-                throw new MyException("管理员不存在");
-            }
-            if (!(admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getPassword())))){
-                throw new MyException("旧密码错误");
-            }
-            if (admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getNewPassword())))
-            {
-                throw new MyException("新密码与旧密码一致");
-            }
-            if (!(adminDto.getNewPassword().equals(adminDto.getPasswordConfirm())))
-            {
-                throw new MyException("两次输入密码不一致");
-            }
-            //重设混淆盐
-            admin.setSalt(SecurityRandom.getRandom());
-       admin.setPassword(adminDto.getNewPassword()+admin.getSalt());
-       adminMapper.updateByPrimaryKeySelective(admin);
+        String s=Encrypt.MD5Encrypt(adminDto.getPassword()+admin.getSalt());
+        if(!(admin.getPassword().equals(s)))
+        {
+            throw new MyException("密码错误");
+        }
+        if (admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getNewPassword())))
+        {
+            throw new MyException("新密码与旧密码一致");
+        }
+        if (!(adminDto.getNewPassword().equals(adminDto.getPasswordConfirm())))
+        {
+            throw new MyException("两次输入密码不一致");
+        }
+        //重设混淆盐
+        admin.setSalt(SecurityRandom.getRandom());
+        String encryptPassword=Encrypt.MD5Encrypt(adminDto.getNewPassword()+admin.getSalt());
+        admin.setPassword(encryptPassword);
+        adminMapper.updateByPrimaryKeySelective(admin);
     }
     public void  UpdateImg(AdminDto adminDto){
         Integer id = (Integer) httpSession.getAttribute("id");

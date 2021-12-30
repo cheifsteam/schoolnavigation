@@ -34,10 +34,10 @@ public class RestControllerExceptionHandler {
     /**
      * 处理Exception类的异常
      */
-    @ExceptionHandler({ Exception.class })
-    public AjaxResult exceptionHandler() {
-        return AjaxResult.error();
-    }
+//    @ExceptionHandler({ Exception.class })
+//    public AjaxResult exceptionHandler() {
+//        return AjaxResult.error();
+//    }
 }
 
 

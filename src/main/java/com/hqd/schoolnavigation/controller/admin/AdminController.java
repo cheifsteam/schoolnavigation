@@ -55,12 +55,12 @@ public class AdminController {
         return AjaxResult.success("登出成功");
     }
     @PostMapping("/admin/admin/updatePassword")
-    public AjaxResult UpdatePassword(AdminDto adminDto){
+    public AjaxResult UpdatePassword(@RequestBody  AdminDto adminDto){
         adminService.UpdatePassword(adminDto);
         return AjaxResult.success("修改密码成功");
     }
     @PostMapping("/admin/admin/updateImg")
-    public AjaxResult UpdateImg(AdminDto adminDto)
+    public AjaxResult UpdateImg(@RequestBody  AdminDto adminDto)
     {
         adminService.UpdateImg(adminDto);
         return AjaxResult.success("修改头像成功");

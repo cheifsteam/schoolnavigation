@@ -41,7 +41,8 @@ public class UserService {
         if (user==null){
             throw new MyException("账号错误");
         }
-        if ((user.getPassword().equals(Encrypt.MD5Encrypt(user.getSalt()+userDto.getPassword()))))
+        String s=Encrypt.MD5Encrypt(userDto.getPassword()+user.getSalt());
+        if(!(user.getPassword().equals(s)))
         {
             throw new MyException("密码错误");
         }
@@ -60,7 +61,7 @@ public class UserService {
         }
         else {
             user.setSalt(SecurityRandom.getRandom());
-            String encryptPassword = Encrypt.MD5Encrypt(user.getPassword() + user.getSalt());
+            String encryptPassword = Encrypt.MD5Encrypt(user.getPassword()+user.getSalt());
             user.setPassword(encryptPassword);
             userMapper.insert(user);
         }
@@ -73,9 +74,9 @@ public class UserService {
         userExample=new UserExample();
         final UserExample.Criteria criteria = userExample.createCriteria().andPhoneNumberEqualTo(phoneNumber);
         userExample.or(criteria);
-        final List<User> users = userMapper.selectByExample(userExample);
-        if (users==null){
-            throw new MyException("用户不存在");
+        List<User> users = userMapper.selectByExample(userExample);
+        if (users.isEmpty()){
+          return null;
         }
         return users.get(0);
     }
@@ -102,10 +103,12 @@ public class UserService {
         User user = userMapper.selectByPrimaryKey(id);
         if (user==null)
         {
-            throw new MyException("管理员不存在");
+            throw new MyException("用户不存在");
         }
-        if (!(user.getPassword().equals(Encrypt.MD5Encrypt(user.getSalt()+userDto.getPassword())))){
-            throw new MyException("旧密码错误");
+        String s=Encrypt.MD5Encrypt(userDto.getPassword()+user.getSalt());
+        if(!(user.getPassword().equals(s)))
+        {
+            throw new MyException("密码错误");
         }
         if (user.getPassword().equals(Encrypt.MD5Encrypt(user.getSalt()+userDto.getNewPassword())))
         {
@@ -135,27 +138,31 @@ public class UserService {
         userMapper.updateByPrimaryKeySelective(user);
     }
     public void Register(UserDto userDto){
-    if (userDto.getPhoneNumber().length()!=11)
-    {
-       throw new MyException("手机号长度为11位");
-    }
-    if (userDto.getPassword().length()<6)
-    {
-        throw new MyException("密码长度不能少于6位");
-    }
-    if (!(userDto.getPasswordConfirm().equals(userDto.getPassword())))
-    {
-        throw new MyException("两次输入的密码不一致");
-    }
-    if (userDto.getNickname()==null)
-    {
-        throw new MyException("呢称不能为空");
-    }
-    final User user = BeanCopyUtils.copyBean(userDto, User.class);
-    user.setSalt(SecurityRandom.getRandom());
-    user.setPassword(user.getPassword()+user.getSalt());
-    userMapper.insert(user);
-
+        if (getUserByPhoneNumber(userDto.getPhoneNumber())!=null)
+        {
+            throw new MyException("手机号已经被注册");
+        }
+        if (userDto.getPhoneNumber().length()!=11||userDto.getPhoneNumber()==null)
+        {
+            throw new MyException("手机号长度为11位");
+        }
+        if (userDto.getPassword().length()<6||userDto.getPassword()==null)
+        {
+            throw new MyException("密码长度不能少于6位");
+        }
+        if (!(userDto.getPasswordConfirm().equals(userDto.getPassword())))
+        {
+            throw new MyException("两次输入的密码不一致");
+        }
+        if (userDto.getNickname()==null)
+        {
+            throw new MyException("呢称不能为空");
+        }
+        User user = BeanCopyUtils.copyBean(userDto, User.class);
+        user.setSalt(SecurityRandom.getRandom());
+        String encryptPassword = Encrypt.MD5Encrypt(user.getPassword()+user.getSalt());
+        user.setPassword(encryptPassword);
+        userMapper.insert(user);
     }
 
 }

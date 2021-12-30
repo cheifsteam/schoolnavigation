@@ -53,18 +53,19 @@ public class UserController {
         return AjaxResult.success("登出成功");
     }
     @PostMapping("/web/user/updatePassword")
-    public AjaxResult UpdatePassword(UserDto userDto){
+    public AjaxResult UpdatePassword(@RequestBody  UserDto userDto){
         userService.UpdatePassword(userDto);
         return AjaxResult.success("修改密码成功");
     }
     @PostMapping("/web/user/updateImg")
-    public AjaxResult UpdateImg(UserDto userDto)
+    public AjaxResult UpdateImg(@RequestBody UserDto userDto)
     {
         userService.UpdateImg(userDto);
         return AjaxResult.success("修改头像成功");
     }
-//    @PostMapping("/web/user/register")
-//    public AjaxResult Register(UserDto userDto){
-//
-//    }
+    @PostMapping("/web/user/register")
+    public AjaxResult Register(@RequestBody  UserDto userDto){
+    userService.Register(userDto);
+    return AjaxResult.success("注册成功");
+    }
 }
