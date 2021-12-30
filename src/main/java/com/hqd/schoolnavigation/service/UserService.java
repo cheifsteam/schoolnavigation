@@ -1,5 +1,6 @@
 package com.hqd.schoolnavigation.service;
 
+import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hqd.schoolnavigation.domain.*;
 import com.hqd.schoolnavigation.domain.User;
@@ -81,6 +82,7 @@ public class UserService {
         return users.get(0);
     }
     public void getAllUsers(PageDto pageDto){
+        PageHelper.startPage(pageDto.getPage(),pageDto.getPageSize());
         userExample=new UserExample();
         List<User> users = userMapper.selectByExample(userExample);
         List<UserDto> userDtos = BeanCopyUtils.copyListProperties(users, UserDto::new);

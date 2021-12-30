@@ -33,7 +33,7 @@ public class UserController {
         userService.deleteUser(id);
         return AjaxResult.success();
     }
-    @GetMapping("/web/user/getAll")
+    @PostMapping("/web/user/getAll")
     public AjaxResult getAllUsers(@RequestBody PageDto pageDto)
     {
         userService.getAllUsers(pageDto);
