@@ -63,8 +63,8 @@ public class UserController {
         userService.UpdateImg(userDto);
         return AjaxResult.success("修改头像成功");
     }
-    @PostMapping("/web/user/register")
-    public AjaxResult Register(UserDto userDto){
-
-    }
+//    @PostMapping("/web/user/register")
+//    public AjaxResult Register(UserDto userDto){
+//
+//    }
 }
