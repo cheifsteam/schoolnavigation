@@ -8,6 +8,7 @@ package com.hqd.schoolnavigation.excpetion;
 
 import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.AjaxResult;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -30,14 +31,20 @@ public class RestControllerExceptionHandler {
     public AjaxResult  baseExceptionHandler(MyException e) {
         return AjaxResult.error(e.getCode(),e.getMsg());
     }
-
     /**
      * 处理Exception类的异常
      */
-//    @ExceptionHandler({ Exception.class })
-//    public AjaxResult exceptionHandler() {
-//        return AjaxResult.error();
-//    }
+    /**
+     * 处理DuplicateKeyException类(主键重复异常)的异常
+     */
+    @ExceptionHandler({ DuplicateKeyException.class })
+    public AjaxResult DuplicateKeyExceptionHandler() {
+        return AjaxResult.error("主键重复异常");
+    }
+    @ExceptionHandler({ Exception.class })
+    public AjaxResult exceptionHandler() {
+        return AjaxResult.error();
+    }
 }
 
 
