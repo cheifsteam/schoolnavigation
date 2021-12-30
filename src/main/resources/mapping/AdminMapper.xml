@@ -7,6 +7,7 @@
     <result column="password" jdbcType="VARCHAR" property="password" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="img" jdbcType="VARCHAR" property="img" />
+    <result column="nickname" jdbcType="CHAR" property="nickname" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -38,7 +39,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, admin_name, password, salt, img
+    id, admin_name, password, salt, img, nickname
   </sql>
   <select id="selectByExample" parameterType="com.hqd.schoolnavigation.domain.AdminExample" resultMap="BaseResultMap">
     select
@@ -67,9 +68,9 @@
   </delete>
   <insert id="insert" parameterType="com.hqd.schoolnavigation.domain.Admin">
     insert into admin (id, admin_name, password, 
-      salt, img)
+      salt, img, nickname)
     values (#{id,jdbcType=INTEGER}, #{adminName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR})
+      #{salt,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}, #{nickname,jdbcType=CHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.hqd.schoolnavigation.domain.Admin">
     insert into admin
@@ -89,6 +90,9 @@
       <if test="img != null">
         img,
       </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -105,6 +109,9 @@
       </if>
       <if test="img != null">
         #{img,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=CHAR},
       </if>
     </trim>
   </insert>
@@ -123,6 +130,9 @@
       <if test="img != null">
         img = #{img,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=CHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -131,7 +141,8 @@
     set admin_name = #{adminName,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
-      img = #{img,jdbcType=VARCHAR}
+      img = #{img,jdbcType=VARCHAR},
+      nickname = #{nickname,jdbcType=CHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

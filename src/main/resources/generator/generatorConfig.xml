@@ -18,8 +18,8 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
 
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://localhost:3306/schoolnavigation?serverTimezone=UTC&amp;useUnicode=true&amp;characterEncoding=utf-8&amp;useSSL=true"
-                        userId="root" password="qwer123+456">
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver" connectionURL="jdbc:mysql://120.77.54.156:3306/schoolnavigation?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=UTC"
+                        userId="su" password="123456">
 <!--           防止MyBatis Generator 生成器把其他数据库的同名表生成下来-->
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>

@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
     <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="nickName" jdbcType="VARCHAR" property="nickname" />
     <result column="salt" jdbcType="VARCHAR" property="salt" />
     <result column="img" jdbcType="VARCHAR" property="img" />
   </resultMap>
@@ -38,7 +39,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, phone_number, password, salt, img
+    id, phone_number, password, nickName, salt, img
   </sql>
   <select id="selectByExample" parameterType="com.hqd.schoolnavigation.domain.UserExample" resultMap="BaseResultMap">
     select
@@ -67,9 +68,11 @@
   </delete>
   <insert id="insert" parameterType="com.hqd.schoolnavigation.domain.User">
     insert into user (id, phone_number, password, 
-      salt, img)
+      nickName, salt, img
+      )
     values (#{id,jdbcType=INTEGER}, #{phoneNumber,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
-      #{salt,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR})
+      #{nickname,jdbcType=VARCHAR}, #{salt,jdbcType=VARCHAR}, #{img,jdbcType=VARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.hqd.schoolnavigation.domain.User">
     insert into user
@@ -82,6 +85,9 @@
       </if>
       <if test="password != null">
         password,
+      </if>
+      <if test="nickname != null">
+        nickName,
       </if>
       <if test="salt != null">
         salt,
@@ -100,6 +106,9 @@
       <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
       <if test="salt != null">
         #{salt,jdbcType=VARCHAR},
       </if>
@@ -117,6 +126,9 @@
       <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
+      <if test="nickname != null">
+        nickName = #{nickname,jdbcType=VARCHAR},
+      </if>
       <if test="salt != null">
         salt = #{salt,jdbcType=VARCHAR},
       </if>
@@ -130,6 +142,7 @@
     update user
     set phone_number = #{phoneNumber,jdbcType=VARCHAR},
       password = #{password,jdbcType=VARCHAR},
+      nickName = #{nickname,jdbcType=VARCHAR},
       salt = #{salt,jdbcType=VARCHAR},
       img = #{img,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}

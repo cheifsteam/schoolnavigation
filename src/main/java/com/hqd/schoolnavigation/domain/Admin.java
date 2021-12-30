@@ -11,6 +11,8 @@ public class Admin {
 
     private String img;
 
+    private String nickname;
+
     public Integer getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class Admin {
 
     public void setImg(String img) {
         this.img = img == null ? null : img.trim();
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname == null ? null : nickname.trim();
     }
 }

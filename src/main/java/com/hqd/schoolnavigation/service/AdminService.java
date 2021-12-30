@@ -36,7 +36,6 @@ public class AdminService {
     //添加管理员
     public void addAdmin(AdminDto adminDto) {
         Admin admin = BeanCopyUtils.copyBean(adminDto, Admin.class);
-        System.out.println("fafas");
         if (getAdminByName(admin.getAdminName())!=null) {
 
             throw new MyException("该管理员已经存在");
@@ -81,29 +80,29 @@ public class AdminService {
         return token;
     }
     public void SignOut(){
-         Integer userid = (Integer) httpSession.getAttribute("id");
-        webTokenUtil.deleteToken(userid);
-    }
-    public void UpdatePassword(AdminDto adminDto){
-       Integer id = (Integer) httpSession.getAttribute("id");
-       Admin admin = adminMapper.selectByPrimaryKey(id);
-       if (admin==null)
-       {
-           throw new MyException("管理员不存在");
-       }
-       if (!(admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getPassword())))){
-           throw new MyException("旧密码错误");
-       }
-       if (admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getNewPassword())))
-       {
-           throw new MyException("新密码与旧密码一致");
-       }
-       if (!(adminDto.getNewPassword().equals(adminDto.getPasswordConfirm())))
-       {
-           throw new MyException("两次输入密码不一致");
-       }
-       //重设混淆盐
-       admin.setSalt(SecurityRandom.getRandom());
+            Integer userid = (Integer) httpSession.getAttribute("id");
+            webTokenUtil.deleteToken(userid);
+        }
+        public void UpdatePassword(AdminDto adminDto){
+            Integer id = (Integer) httpSession.getAttribute("id");
+            Admin admin = adminMapper.selectByPrimaryKey(id);
+            if (admin==null)
+            {
+                throw new MyException("管理员不存在");
+            }
+            if (!(admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getPassword())))){
+                throw new MyException("旧密码错误");
+            }
+            if (admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getNewPassword())))
+            {
+                throw new MyException("新密码与旧密码一致");
+            }
+            if (!(adminDto.getNewPassword().equals(adminDto.getPasswordConfirm())))
+            {
+                throw new MyException("两次输入密码不一致");
+            }
+            //重设混淆盐
+            admin.setSalt(SecurityRandom.getRandom());
        admin.setPassword(adminDto.getNewPassword()+admin.getSalt());
        adminMapper.updateByPrimaryKeySelective(admin);
     }
