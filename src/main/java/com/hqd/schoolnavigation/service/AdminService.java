@@ -15,6 +15,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 import java.time.Instant;
 import java.util.List;
 
@@ -30,6 +31,8 @@ public class AdminService {
     private AdminExample adminExample;
     @Resource
     private WebTokenUtil webTokenUtil;
+    @Resource
+    public HttpSession httpSession;
     //添加管理员
     public void addAdmin(AdminDto adminDto) {
         Admin admin = BeanCopyUtils.copyBean(adminDto, Admin.class);
@@ -77,6 +80,47 @@ public class AdminService {
         headers.set("Set-Token", token);
         return token;
     }
+    public void SignOut(){
+         Integer userid = (Integer) httpSession.getAttribute("id");
+        webTokenUtil.deleteToken(userid);
+    }
+    public void UpdatePassword(AdminDto adminDto){
+       Integer id = (Integer) httpSession.getAttribute("id");
+       Admin admin = adminMapper.selectByPrimaryKey(id);
+       if (admin==null)
+       {
+           throw new MyException("管理员不存在");
+       }
+       if (!(admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getPassword())))){
+           throw new MyException("旧密码错误");
+       }
+       if (admin.getPassword().equals(Encrypt.MD5Encrypt(admin.getSalt()+adminDto.getNewPassword())))
+       {
+           throw new MyException("新密码与旧密码一致");
+       }
+       if (!(adminDto.getNewPassword().equals(adminDto.getPasswordConfirm())))
+       {
+           throw new MyException("两次输入密码不一致");
+       }
+       //重设混淆盐
+       admin.setSalt(SecurityRandom.getRandom());
+       admin.setPassword(adminDto.getNewPassword()+admin.getSalt());
+       adminMapper.updateByPrimaryKeySelective(admin);
+    }
+    public void  UpdateImg(AdminDto adminDto){
+        Integer id = (Integer) httpSession.getAttribute("id");
+        Admin admin = adminMapper.selectByPrimaryKey(id);
+        if (admin==null)
+        {
+            throw new MyException("管理员不存在");
+        }
+        if (adminDto.getImg()==null)
+        {
+            throw new MyException("新头像不能为空");
+        }
+        admin.setImg(adminDto.getImg());
+        adminMapper.updateByPrimaryKeySelective(admin);
+    }
     public Admin getAdminByName(String name)
     {
         adminExample=new AdminExample();
@@ -96,4 +140,5 @@ public class AdminService {
         String token = webTokenUtil.create(secretKey, String.valueOf(admin.getId()), now, 5);
         return token;
     }
+
 }

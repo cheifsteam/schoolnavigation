@@ -82,4 +82,7 @@ public class RedisCache
     {
         redisTemplate.opsForValue().set(key, value);
     }
+    public void  deleteCacheObject(final String key){
+        redisTemplate.delete(key);
+    }
 }

@@ -156,4 +156,7 @@ public class WebTokenUtil {
         redisCache.setCacheObject(jwtToken.getSubject(),token,epochSecond);
         return token;
     }
+    public void deleteToken(Integer userid){
+       redisCache.deleteCacheObject(String.valueOf(userid));
+    }
 }

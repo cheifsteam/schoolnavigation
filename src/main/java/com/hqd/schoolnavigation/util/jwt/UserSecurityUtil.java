@@ -15,6 +15,7 @@ import org.springframework.util.StringUtils;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 
@@ -32,7 +33,11 @@ public class UserSecurityUtil {
      * @return
      */
     @Resource
+    public WebTokenUtil webTokenUtil;
+    @Resource
     public RedisCache redisCache;
+    @Resource
+    public HttpSession httpSession;
     public   boolean verifyWebToken(HttpServletRequest req, HttpServletResponse resp) {
 
         String token = req.getHeader("Authorization");
@@ -45,11 +50,13 @@ public class UserSecurityUtil {
         }
         //从JWT里取出存放在payload段里的userid，查询这个用户信息得到用户最后登录时间
         Integer userId = Integer.valueOf(jwtToken.getSubject());
+
+        httpSession.setAttribute("id",userId);
             //校验
           String cacheToken = redisCache.getCacheObject(String.valueOf(userId));
             if (cacheToken!=null)
             {
-                final WebTokenUtil webTokenUtil = new WebTokenUtil();
+
                 String newToken =webTokenUtil.getRefreshToken(WebTokenUtil.getSecretKey(), jwtToken);
                 logger.debug("Subject : [" + userId + "] token expired, allow get refresh token [" + newToken + "]");
                 resp.setHeader("Set-Token", newToken);

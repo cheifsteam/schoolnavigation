@@ -48,5 +48,22 @@ public class AdminController {
         return AjaxResult.success("操作成功",token);
 
     }
+    @PostMapping("/admin/admin/signOut")
+    public AjaxResult AdminSignOut()
+    {
+        adminService.SignOut();
+        return AjaxResult.success("登出成功");
+    }
+    @PostMapping("/admin/admin/updatePassword")
+    public AjaxResult UpdatePassword(AdminDto adminDto){
+        adminService.UpdatePassword(adminDto);
+        return AjaxResult.success("修改密码成功");
+    }
+    @PostMapping("/admin/admin/updateImg")
+    public AjaxResult UpdateImg(AdminDto adminDto)
+    {
+        adminService.UpdateImg(adminDto);
+        return AjaxResult.success("修改头像成功");
+    }
 
 }
