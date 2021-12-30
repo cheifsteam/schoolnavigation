@@ -77,7 +77,7 @@
             <b class="arrow"></b>
           </li>
 
-          <li class="active open">
+          <li class="">
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 系统管理 </span>
@@ -88,27 +88,26 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
+<!--              <li class="" id="system-user-sidebar">-->
+<!--                <router-link href="tables.html">-->
+<!--                  <i class="menu-icon fa fa-caret-right"></i>-->
+<!--                  个人信息管理-->
+<!--                </router-link>-->
+<!--                <b class="arrow"></b>-->
+<!--              </li>-->
 
-              <li class="">
-                <a href="tables.html">
-                  <i class="menu-icon fa fa-caret-right"></i>
-                  个人信息管理
-                </a>
-                <b class="arrow"></b>
-              </li>
-
-              <li class="">
-                <a href="/admin/member">
+              <li class="" id="admin-business-sidebar">
+                <router-link to="/admin/member">
                   <i class="menu-icon fa fa-caret-right"></i>
                   管理员管理
-                </a>
+                </router-link>
                 <b class="arrow"></b>
               </li>
 
             </ul>
           </li>
 
-          <li class="active open">
+          <li class="">
             <a href="#" class="dropdown-toggle">
               <i class="menu-icon fa fa-list"></i>
               <span class="menu-text"> 业务管理 </span>
@@ -119,8 +118,7 @@
             <b class="arrow"></b>
 
             <ul class="submenu">
-
-              <li class="">
+              <li class="" id="admin-category-sidebar">
                 <router-link to="/admin/category">
                   <i class="menu-icon fa fa-caret-right"></i>
                   分类管理
@@ -128,7 +126,7 @@
                 <b class="arrow"></b>
               </li>
 
-              <li class="">
+              <li class="" id="admin-school-sidebar">
                 <router-link to="/admin/school">
                   <i class="menu-icon fa fa-caret-right"></i>
                   学校管理
@@ -136,24 +134,24 @@
                 <b class="arrow"></b>
               </li>
 
-              <li class="">
-                <router-link to="/admin/school">
+              <li class="" id="admin-user-sidebar">
+                <router-link to="/admin/user">
                   <i class="menu-icon fa fa-caret-right"></i>
                   用户管理
                 </router-link>
                 <b class="arrow"></b>
               </li>
 
-              <li class="">
-                <router-link to="/admin/school">
+              <li class="" id="admin-schoolinfo-sidebar">
+                <router-link to="/admin/schoolinfo">
                   <i class="menu-icon fa fa-caret-right"></i>
                   学校资讯管理
                 </router-link>
                 <b class="arrow"></b>
               </li>
 
-              <li class="">
-                <router-link to="/admin/school">
+              <li class="" id="admin-file-sidebar">
+                <router-link to="/admin/file">
                   <i class="menu-icon fa fa-caret-right"></i>
                   文件管理
                 </router-link>

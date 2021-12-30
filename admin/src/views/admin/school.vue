@@ -265,6 +265,9 @@ export default {
     list(page) {
       let _this = this;
       _this.$ajax.post(process.env.VUE_APP_SERVER+'/admin/school/getAll', {
+        headers: {
+
+        },
         page: page,
         pageSize: _this.$refs.pagination.size,
       }).then((response)=>{

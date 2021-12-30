@@ -30,14 +30,14 @@
                       <fieldset>
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="text" class="form-control" placeholder="账号" />
+															<input v-model="member.adminName" type="text" class="form-control" placeholder="账号" />
 															<i class="ace-icon fa fa-user"></i>
 														</span>
                         </label>
 
                         <label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input type="password" class="form-control" placeholder="密码" />
+															<input v-model="member.password" type="password" class="form-control" placeholder="密码" />
 															<i class="ace-icon fa fa-lock"></i>
 														</span>
                         </label>
@@ -78,6 +78,11 @@
 <script>
 export default {
   name: 'login',
+  data: function () {
+    return {
+      member: {},
+    }
+  },
   mounted:function() {
     $('body').removeClass('no-skin');
     $('body').attr('class', 'login-layout light-login');
@@ -85,7 +90,23 @@ export default {
   },
   methods: {
     login(){
-      this.$router.push("/welcome")
+      let _this = this;
+      console.log(_this.member)
+      Loading.show();
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/admin/login', _this.member).then((response)=> {
+        Loading.hide();
+        let resp = response;
+        console.log(resp)
+        console.log(resp.data.code)
+        if(resp.data.code == 200) {
+          console.log("登录成功：",resp.data.msg);
+          //Tool.setLoginUser(resp.data);
+          _this.$router.push("/welcome")
+        } else {
+          Toast.warning(resp.data.msg)
+        }
+
+      });
     }
   }
 }
