@@ -4,8 +4,10 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.hqd.schoolnavigation.domain.Admin;
 import com.hqd.schoolnavigation.domain.AdminExample;
+import com.hqd.schoolnavigation.domain.Admin;
 import com.hqd.schoolnavigation.dto.AdminDto;
 import com.hqd.schoolnavigation.dto.PageDto;
+import com.hqd.schoolnavigation.dto.AdminDto;
 import com.hqd.schoolnavigation.excpetion.MyException;
 import com.hqd.schoolnavigation.mapper.AdminMapper;
 import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
@@ -59,12 +61,12 @@ public class AdminService {
     public void getAllAdmins(PageDto pageDto)
     {
         adminExample=new AdminExample();
-        PageHelper.startPage(pageDto.getPage(),pageDto.getPageSize());
+        PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
         List<Admin> admins = adminMapper.selectByExample(adminExample);
-        List<AdminDto> adminDtos = BeanCopyUtils.copyListProperties(admins, AdminDto::new);
-        PageInfo<AdminDto> pageInfo=new PageInfo<>(adminDtos);
+        PageInfo<Admin> pageInfo=new PageInfo<>(admins);
+        List<AdminDto> schoolDtos = BeanCopyUtils.copyListProperties(admins,AdminDto::new);
         pageDto.setTotal((int) pageInfo.getTotal());
-        pageDto.setData(adminDtos);
+        pageDto.setData(schoolDtos);
     }
     public String AdminLogin(AdminDto adminDto){
         Admin admin = getAdminByName(adminDto.getAdminName());
