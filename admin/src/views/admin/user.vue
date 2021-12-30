@@ -17,29 +17,29 @@
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
-        <th>管理员id</th>
-        <th>管理员登录名</th>
-        <th>管理员昵称</th>
-        <th>管理员密码</th>
+        <th>用户id</th>
+        <th>用户登录名</th>
+        <th>用户昵称</th>
+        <th>用户密码</th>
         <th>操作</th>
       </tr>
       </thead>
 
       <tbody>
-      <tr v-for="member in members">
-        <td>{{member.id}}</td>
-        <td>{{member.admin_name}}</td>
-        <td>{{member.nickname}}</td>
-        <td>{{member.password}}</td>
-        <td>{{member.img}}</td>
+      <tr v-for="user in users">
+        <td>{{user.id}}</td>
+        <td>{{user.admin_name}}</td>
+        <td>{{user.nickname}}</td>
+        <td>{{user.password}}</td>
+        <td>{{user.img}}</td>
 
 
         <td>
           <div class="hidden-sm hidden-xs btn-group">
-            <button v-on:click="edit(member)" class="btn btn-xs btn-info">
+            <button v-on:click="edit(user)" class="btn btn-xs btn-info">
               <i class="ace-icon fa fa-pencil bigger-120"></i>
             </button>
-            <button v-on:click="del(member.id)" class="btn btn-xs btn-danger">
+            <button v-on:click="del(user.id)" class="btn btn-xs btn-danger">
               <i class="ace-icon fa fa-trash-o bigger-120"></i>
             </button>
           </div>
@@ -64,7 +64,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员id</label>
                 <div class="col-sm-10">
-                  <input v-model="member.id" class="form-control">
+                  <input v-model="user.id" class="form-control">
                 </div>
               </div>
 
@@ -72,21 +72,21 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员账号</label>
                 <div class="col-sm-10">
-                  <input v-model="member.admin_name" class="form-control">
+                  <input v-model="user.admin_name" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员昵称</label>
                 <div class="col-sm-10">
-                  <input v-model="member.nickname" class="form-control">
+                  <input v-model="user.nickname" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员密码</label>
                 <div class="col-sm-10">
-                  <input v-model="member.password" class="form-control">
+                  <input v-model="user.password" class="form-control">
                 </div>
               </div>
 
@@ -94,7 +94,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员头像</label>
                 <div class="col-sm-10">
-                  <input v-model="member.img" class="form-control">
+                  <input v-model="user.img" class="form-control">
                 </div>
               </div>
 
@@ -127,7 +127,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员id</label>
                 <div class="col-sm-10">
-                  <input v-model="member.id" class="form-control">
+                  <input v-model="user.id" class="form-control">
                 </div>
               </div>
 
@@ -135,21 +135,21 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员账号</label>
                 <div class="col-sm-10">
-                  <input v-model="member.admin_name" class="form-control">
+                  <input v-model="user.admin_name" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员昵称</label>
                 <div class="col-sm-10">
-                  <input v-model="member.nickname" class="form-control">
+                  <input v-model="user.nickname" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员密码</label>
                 <div class="col-sm-10">
-                  <input v-model="member.password" class="form-control">
+                  <input v-model="user.password" class="form-control">
                 </div>
               </div>
 
@@ -157,7 +157,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">管理员头像</label>
                 <div class="col-sm-10">
-                  <input v-model="member.img" class="form-control">
+                  <input v-model="user.img" class="form-control">
                 </div>
               </div>
 
@@ -183,11 +183,11 @@
 import Pagination from "../../components/pagination";
 export default {
   components: {Pagination},
-  name: "business-member",
+  name: "business-user",
   data: function() {
     return {
-      member: {},
-      members: [],
+      user: {},
+      users: [],
     }
   },
   mounted: function() {
@@ -195,7 +195,7 @@ export default {
     _this.$refs.pagination.size = 5;
     _this.list(1);
     // sidebar激活样式方法一
-    // this.$parent.activeSidebar("system-member-sidebar");
+    // this.$parent.activeSidebar("system-user-sidebar");
 
   },
   methods: {
@@ -204,16 +204,16 @@ export default {
      */
     add() {
       let _this = this;
-      _this.member = {};
+      _this.user = {};
       $("#form-modal").modal("show");
     },
 
     /**
      * 点击【编辑】
      */
-    edit(member) {
+    edit(user) {
       let _this = this;
-      _this.member = $.extend({}, member);
+      _this.user = $.extend({}, user);
       $("#form-modal2").modal("show");
     },
 
@@ -222,12 +222,12 @@ export default {
      */
     list(page) {
       let _this = this;
-      _this.$ajax.post(process.env.VUE_APP_SERVER+'/admin/member/getAll', {
+      _this.$ajax.post(process.env.VUE_APP_SERVER+'/admin/user/getAll', {
         page: page,
         pageSize: _this.$refs.pagination.size,
       }).then((response)=>{
         let resp = response.data;
-        _this.members = resp.data.data;
+        _this.users = resp.data.data;
         _this.$refs.pagination.render(page, resp.data.total);
         console.log(resp.data.data);
 
@@ -240,11 +240,11 @@ export default {
     save() {
       let _this = this;
 
-      //_this.member.categorys = categorys;
+      //_this.user.categorys = categorys;
 
       Loading.show();
-      console.log(_this.member);
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/member/add', _this.member).then((response)=>{
+      console.log(_this.user);
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/user/add', _this.user).then((response)=>{
 
         Loading.hide();
         let resp = response.data;
@@ -264,8 +264,8 @@ export default {
     update() {
       let _this = this;
       Loading.show();
-      console.log(_this.member);
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/member/update', _this.member).then((response)=>{
+      console.log(_this.user);
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/user/update', _this.user).then((response)=>{
         Loading.hide();
         let resp = response.data;
         if (resp) {
@@ -285,7 +285,7 @@ export default {
       let _this = this;
       Confirm.show("删除学校信息后不可恢复，确认删除？", function () {
         Loading.show();
-        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/admin/member/delete/' + id).then((response)=>{
+        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/admin/user/delete/' + id).then((response)=>{
           Loading.hide();
           let resp = response.data;
           if (resp) {
