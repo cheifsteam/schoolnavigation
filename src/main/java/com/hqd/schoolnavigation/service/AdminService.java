@@ -60,13 +60,14 @@ public class AdminService {
     //获取所有管理员
     public void getAllAdmins(PageDto pageDto)
     {
-        adminExample=new AdminExample();
+
         PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
+        adminExample=new AdminExample();
         List<Admin> admins = adminMapper.selectByExample(adminExample);
         PageInfo<Admin> pageInfo=new PageInfo<>(admins);
-        List<AdminDto> schoolDtos = BeanCopyUtils.copyListProperties(admins,AdminDto::new);
+        List<AdminDto> adminDtos = BeanCopyUtils.copyListProperties(admins,AdminDto::new);
         pageDto.setTotal((int) pageInfo.getTotal());
-        pageDto.setData(schoolDtos);
+        pageDto.setData(adminDtos);
     }
     public String AdminLogin(AdminDto adminDto){
         Admin admin = getAdminByName(adminDto.getAdminName());
@@ -88,8 +89,7 @@ public class AdminService {
         webTokenUtil.deleteToken(userid);
     }
     public void UpdatePassword(AdminDto adminDto){
-        Integer id = (Integer) httpSession.getAttribute("id");
-        Admin admin = adminMapper.selectByPrimaryKey(id);
+        Admin admin = adminMapper.selectByPrimaryKey(adminDto.getId());
         if (admin==null)
         {
             throw new MyException("管理员不存在");

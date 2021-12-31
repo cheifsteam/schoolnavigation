@@ -11,7 +11,7 @@ public class AdminDto {
     private String adminName;
 
     private String password;
-
+    private String nickname;
     private String img;
     private String passwordConfirm;
     private String newPassword;
