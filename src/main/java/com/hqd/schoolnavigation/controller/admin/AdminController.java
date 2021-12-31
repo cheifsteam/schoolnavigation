@@ -7,6 +7,7 @@ import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.PageDto;
 import com.hqd.schoolnavigation.service.AdminService;
 import com.sun.net.httpserver.Headers;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import  org.springframework.http.HttpHeaders;
 import org.springframework.web.bind.annotation.*;
@@ -29,7 +30,7 @@ public class AdminController {
         adminService.addAdmin(adminDto);
         return AjaxResult.success();
     }
-    @PostMapping("/admin/admin/delete/{id}")
+    @DeleteMapping("/admin/admin/delete/{id}")
     public AjaxResult deleteAdmin(@PathVariable  Integer id)
     {
         adminService.deleteAdmin(id);

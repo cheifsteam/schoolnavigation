@@ -1,5 +1,8 @@
 package com.hqd.schoolnavigation.dto;
 
+import lombok.Value;
+import org.springframework.boot.context.properties.bind.DefaultValue;
+
 /**
  * @author 屈燃希
  * @version 1.0
@@ -7,6 +10,7 @@ package com.hqd.schoolnavigation.dto;
  */
 public class CategoryDto {
     private String id;
+
 
     private String parent;
 

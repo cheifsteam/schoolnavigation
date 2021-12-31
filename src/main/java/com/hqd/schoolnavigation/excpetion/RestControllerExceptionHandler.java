@@ -41,10 +41,10 @@ public class RestControllerExceptionHandler {
     public AjaxResult DuplicateKeyExceptionHandler() {
         return AjaxResult.error("主键重复异常");
     }
-    @ExceptionHandler({ Exception.class })
-    public AjaxResult exceptionHandler() {
-        return AjaxResult.error();
-    }
+//    @ExceptionHandler({ Exception.class })
+//    public AjaxResult exceptionHandler() {
+//        return AjaxResult.error();
+//    }
 }
 
 

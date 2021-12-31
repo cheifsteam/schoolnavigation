@@ -6,6 +6,7 @@ import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.PageDto;
 import com.hqd.schoolnavigation.dto.UserDto;
 import com.hqd.schoolnavigation.service.UserService;
+import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +28,7 @@ public class UserController {
         userService.addUser(userDto);
         return AjaxResult.success();
     }
-    @PostMapping("/web/user/delete/{id}")
+    @DeleteMapping("/web/user/delete/{id}")
     public AjaxResult deleteUser(@PathVariable Integer id)
     {
         userService.deleteUser(id);
