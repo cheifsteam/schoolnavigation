@@ -18,4 +18,6 @@ public interface SchoolCategoryMapper {
     int updateByPrimaryKeySelective(SchoolCategory record);
 
     int updateByPrimaryKey(SchoolCategory record);
+
+    int deleteBySchoolId(Integer id);
 }

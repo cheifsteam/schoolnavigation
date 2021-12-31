@@ -1,5 +1,9 @@
 package com.hqd.schoolnavigation.dto;
 
+import com.hqd.schoolnavigation.domain.Category;
+
+import java.util.List;
+
 /**
  * @author 屈燃希
  * @version 1.0
@@ -22,6 +26,16 @@ public class SchoolDto {
     private String address;
 
     private String info;
+
+    private List<Category> categoryList;
+
+    public List<Category> getCategoryList() {
+        return categoryList;
+    }
+
+    public void setCategoryList(List<Category> categoryList) {
+        this.categoryList = categoryList;
+    }
 
     public Integer getId() {
         return id;

@@ -22,6 +22,8 @@ import java.util.List;
 public class SchoolService {
     @Resource
     private SchoolMapper schoolMapper;
+    @Resource
+    private SchoolCategoryService schoolCategoryService;
 
     private SchoolExample schoolExample;
 
@@ -33,9 +35,11 @@ public class SchoolService {
     }
     public void addSchool(SchoolDto schoolDto) {
         School school = BeanCopyUtils.copyBean(schoolDto, School.class);
-        int insert = schoolMapper.insert(school);
+        schoolCategoryService.addCategory(school.getId(),schoolDto.getCategoryList());
+        schoolMapper.insert(school);
     }
     public void deleteSchool(Integer id){
+        schoolCategoryService.deleteCategory(id);
         schoolMapper.deleteByPrimaryKey(id);
     }
     public void getSchoolByType(String type,PageDto pageDto)
@@ -57,6 +61,7 @@ public class SchoolService {
     {
         schoolExample=new SchoolExample();
         School school = BeanCopyUtils.copyBean(schoolDto, School.class);
+        schoolCategoryService.updateCategory(school.getId(),schoolDto.getCategoryList());
         schoolMapper.updateByPrimaryKeySelective(school);
 
     }

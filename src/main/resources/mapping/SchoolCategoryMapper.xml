@@ -112,4 +112,8 @@
       category_id = #{categoryId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=VARCHAR}
   </update>
+  <delete id="deleteBySchoolId" parameterType="java.lang.Integer">
+    delete from school_category
+    where school_id = #{schoolId,jdbcType=INTEGER}
+  </delete>
 </mapper>
