@@ -100,7 +100,8 @@ export default {
         console.log(resp.data.code)
         if(resp.data.code == 200) {
           console.log("登录成功：",resp.data.msg);
-          //Tool.setLoginUser(resp.data);
+          console.log(resp.data);
+          Tool.setLoginUser(resp.data);
           _this.$router.push("/welcome")
         } else {
           Toast.warning(resp.data.msg)

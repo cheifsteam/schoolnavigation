@@ -66,6 +66,15 @@
 
             <form class="form-horizontal">
 
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  分类
+                </label>
+                <div class="col-sm-10">
+                  <ul id="tree1" class="ztree"></ul>
+                </div>
+              </div>
+
 
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校id</label>
@@ -97,28 +106,28 @@
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校级别</label>
+                <label class="col-sm-2 control-label">学校类型</label>
                 <div class="col-sm-10">
                   <input v-model="school.type" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校电话</label>
+                <label class="col-sm-2 control-label">电话</label>
                 <div class="col-sm-10">
                   <input v-model="school.telephone" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校地址</label>
+                <label class="col-sm-2 control-label">地址</label>
                 <div class="col-sm-10">
                   <input v-model="school.address" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校简介</label>
+                <label class="col-sm-2 control-label">简介</label>
                 <div class="col-sm-10">
                   <input v-model="school.info" class="form-control">
                 </div>
@@ -147,11 +156,20 @@
 
             <form class="form-horizontal">
 
+              <div class="form-group">
+                <label class="col-sm-2 control-label">
+                  分类
+                </label>
+                <div class="col-sm-10">
+                  <ul id="tree2" class="ztree"></ul>
+                </div>
+              </div>
+
 
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校id</label>
                 <div class="col-sm-10">
-                  <input v-model="school.id" class="form-control">
+                  <input v-model="school.id" class="form-control" disabled>
                 </div>
               </div>
 
@@ -178,28 +196,28 @@
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校级别</label>
+                <label class="col-sm-2 control-label">学校类型</label>
                 <div class="col-sm-10">
                   <input v-model="school.type" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校电话</label>
+                <label class="col-sm-2 control-label">电话</label>
                 <div class="col-sm-10">
                   <input v-model="school.telephone" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校地址</label>
+                <label class="col-sm-2 control-label">地址</label>
                 <div class="col-sm-10">
                   <input v-model="school.address" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">学校简介</label>
+                <label class="col-sm-2 control-label">简介</label>
                 <div class="col-sm-10">
                   <input v-model="school.info" class="form-control">
                 </div>
@@ -230,15 +248,17 @@ export default {
     return {
       school: {},
       schools: [],
+      loginUser: {},
     }
   },
   mounted: function() {
     let _this = this;
     _this.$refs.pagination.size = 5;
     _this.list(1);
+    _this.initTree();
     // sidebar激活样式方法一
     // this.$parent.activeSidebar("system-school-sidebar");
-
+    _this.loginUser = Tool.getLoginUser()
   },
   methods: {
     /**
@@ -246,6 +266,9 @@ export default {
      */
     add() {
       let _this = this;
+
+
+
       _this.school = {};
       $("#form-modal").modal("show");
     },
@@ -264,10 +287,8 @@ export default {
      */
     list(page) {
       let _this = this;
+      console.log(_this.loginUser.data)
       _this.$ajax.post(process.env.VUE_APP_SERVER+'/admin/school/getAll', {
-        headers: {
-
-        },
         page: page,
         pageSize: _this.$refs.pagination.size,
       }).then((response)=>{
@@ -287,18 +308,29 @@ export default {
 
       //_this.school.categorys = categorys;
 
+      if (1 != 1
+          || !Validator.require(_this.school.id, "学校id")
+          || !Validator.require(_this.school.name, "学校名称")
+          || !Validator.require(_this.school.nature, "学校性质")
+          || !Validator.require(_this.school.level, "学校级别")
+          || !Validator.require(_this.school.type, "学校类型")
+      ) {
+        return;
+      }
+
       Loading.show();
       console.log(_this.school);
       _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/add', _this.school).then((response)=>{
 
         Loading.hide();
         let resp = response.data;
-        if (resp) {
+        console.log(resp.code);
+        if (resp.code == 200) {
           $("#form-modal").modal("hide");
           _this.list(1);
-          Toast.success("保存成功！");
+          Toast.success("新增成功！");
         } else {
-          Toast.warning(resp)
+          Toast.warning(resp.msg)
         }
       })
     },
@@ -339,6 +371,39 @@ export default {
           }
         })
       });
+    },
+
+
+    initTree() {
+      let setting = {
+        check: {
+          enable: true
+        },
+        data: {
+          simpleData: {
+            enable: true
+          }
+        }
+      };
+
+      let zNodes = [
+        {id: 1, pId: 0, name: "随意勾选 1", open: true},
+        {id: 11, pId: 1, name: "随意勾选 1-1", open: true},
+        {id: 111, pId: 11, name: "随意勾选 1-1-1"},
+        {id: 112, pId: 11, name: "随意勾选 1-1-2"},
+        {id: 12, pId: 1, name: "随意勾选 1-2", open: true},
+        {id: 121, pId: 12, name: "随意勾选 1-2-1"},
+        {id: 122, pId: 12, name: "随意勾选 1-2-2"},
+        {id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true},
+        {id: 21, pId: 2, name: "随意勾选 2-1"},
+        {id: 22, pId: 2, name: "随意勾选 2-2", open: true},
+        {id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true},
+        {id: 222, pId: 22, name: "随意勾选 2-2-2"},
+        {id: 23, pId: 2, name: "随意勾选 2-3"}
+      ];
+
+      $.fn.zTree.init($("#tree1"), setting, zNodes);
+      $.fn.zTree.init($("#tree2"), setting, zNodes);
     },
   }
 }
