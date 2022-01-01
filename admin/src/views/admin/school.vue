@@ -249,13 +249,16 @@ export default {
       school: {},
       schools: [],
       loginUser: {},
+      categorys: [],
+      tree1: {},
+      tree2: {},
     }
   },
   mounted: function() {
     let _this = this;
     _this.$refs.pagination.size = 5;
     _this.list(1);
-    _this.initTree();
+    _this.allCategory();
     // sidebar激活样式方法一
     // this.$parent.activeSidebar("system-school-sidebar");
     _this.loginUser = Tool.getLoginUser()
@@ -318,6 +321,13 @@ export default {
         return;
       }
 
+      let categorys = _this.tree.getCheckedNodes();
+      if (Tool.isEmpty(categorys)) {
+        Toast.warning("请选择分类！");
+        return;
+      }
+      _this.school.categorys = categorys;
+
       Loading.show();
       console.log(_this.school);
       _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/add', _this.school).then((response)=>{
@@ -373,37 +383,38 @@ export default {
       });
     },
 
+    allCategory() {
+      let _this = this;
+      Loading.show();
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/category/getTop').then((respond)=> {
+        Loading.hide();
+        let resp = respond.data;
+        _this.categorys = resp;
+        _this.initTree();
+      })
+    },
+
 
     initTree() {
+      let _this = this;
       let setting = {
         check: {
           enable: true
         },
         data: {
           simpleData: {
+            idKey: "id",
+            pIdKey: "parent",
+            rootPId: "00000000",
             enable: true
           }
         }
       };
 
-      let zNodes = [
-        {id: 1, pId: 0, name: "随意勾选 1", open: true},
-        {id: 11, pId: 1, name: "随意勾选 1-1", open: true},
-        {id: 111, pId: 11, name: "随意勾选 1-1-1"},
-        {id: 112, pId: 11, name: "随意勾选 1-1-2"},
-        {id: 12, pId: 1, name: "随意勾选 1-2", open: true},
-        {id: 121, pId: 12, name: "随意勾选 1-2-1"},
-        {id: 122, pId: 12, name: "随意勾选 1-2-2"},
-        {id: 2, pId: 0, name: "随意勾选 2", checked: true, open: true},
-        {id: 21, pId: 2, name: "随意勾选 2-1"},
-        {id: 22, pId: 2, name: "随意勾选 2-2", open: true},
-        {id: 221, pId: 22, name: "随意勾选 2-2-1", checked: true},
-        {id: 222, pId: 22, name: "随意勾选 2-2-2"},
-        {id: 23, pId: 2, name: "随意勾选 2-3"}
-      ];
+      let zNodes = _this.categorys;
 
-      $.fn.zTree.init($("#tree1"), setting, zNodes);
-      $.fn.zTree.init($("#tree2"), setting, zNodes);
+      _this.tree1 = $.fn.zTree.init($("#tree1"), setting, zNodes);
+      _this.tree2 = _this.tree1;
     },
   }
 }
