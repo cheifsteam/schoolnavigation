@@ -7,6 +7,8 @@ import java.util.List;
 public interface CategoryMapper {
     int deleteByPrimaryKey(String id);
 
+    int deleteByExample(CategoryExample example);
+
     int insert(Category record);
 
     int insertSelective(Category record);

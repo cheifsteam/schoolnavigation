@@ -5,6 +5,8 @@ import com.hqd.schoolnavigation.domain.SchoolCategoryExample;
 import java.util.List;
 
 public interface SchoolCategoryMapper {
+    int deleteByExample(SchoolCategoryExample example);
+
     int deleteByPrimaryKey(String id);
 
     int insert(SchoolCategory record);

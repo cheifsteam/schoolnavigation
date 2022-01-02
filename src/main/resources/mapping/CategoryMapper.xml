@@ -64,6 +64,12 @@
     delete from category
     where id = #{id,jdbcType=VARCHAR}
   </delete>
+  <delete id="deleteByExample" parameterType="com.hqd.schoolnavigation.domain.Category">
+    delete from category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <insert id="insert" parameterType="com.hqd.schoolnavigation.domain.Category">
     insert into category (id, parent, name, 
       sort)

@@ -269,10 +269,8 @@ export default {
      */
     add() {
       let _this = this;
-
-
-
       _this.school = {};
+      _this.tree1.checkAllNodes(false);
       $("#form-modal").modal("show");
     },
 
@@ -282,6 +280,7 @@ export default {
     edit(school) {
       let _this = this;
       _this.school = $.extend({}, school);
+      _this.listCategory(school.id);
       $("#form-modal2").modal("show");
     },
 
@@ -298,7 +297,6 @@ export default {
         let resp = response.data;
         _this.schools = resp.data.data;
         _this.$refs.pagination.render(page, resp.data.total);
-        console.log(resp.data.data);
 
       })
     },
@@ -321,15 +319,17 @@ export default {
         return;
       }
 
-      let categorys = _this.tree.getCheckedNodes();
+      let categorys = _this.tree1.getCheckedNodes();
+
       if (Tool.isEmpty(categorys)) {
         Toast.warning("请选择分类！");
         return;
       }
       _this.school.categorys = categorys;
 
+
       Loading.show();
-      console.log(_this.school);
+
       _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/add', _this.school).then((response)=>{
 
         Loading.hide();
@@ -340,7 +340,7 @@ export default {
           _this.list(1);
           Toast.success("新增成功！");
         } else {
-          Toast.warning(resp.msg)
+          Toast.warning(resp.error)
         }
       })
     },
@@ -350,6 +350,10 @@ export default {
      */
     update() {
       let _this = this;
+
+      let categorys = _this.tree2.getCheckedNodes();
+      _this.school.categorys = categorys;
+
       Loading.show();
       console.log(_this.school);
       _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/update', _this.school).then((response)=>{
@@ -386,10 +390,12 @@ export default {
     allCategory() {
       let _this = this;
       Loading.show();
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/category/getTop').then((respond)=> {
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/category/getall').then((respond)=> {
+
         Loading.hide();
         let resp = respond.data;
-        _this.categorys = resp;
+        console.log(resp);
+        _this.categorys = resp.data;
         _this.initTree();
       })
     },
@@ -414,7 +420,33 @@ export default {
       let zNodes = _this.categorys;
 
       _this.tree1 = $.fn.zTree.init($("#tree1"), setting, zNodes);
-      _this.tree2 = _this.tree1;
+      _this.tree2 = $.fn.zTree.init($("#tree2"), setting, zNodes);
+
+
+      // 展开所有的节点
+      // _this.tree.expandAll(true);
+    },
+
+    /**
+     * 查找课程下所有分类
+     * @param schoolId
+     */
+    listCategory(schoolId) {
+      let _this = this;
+      Loading.show();
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/list-category/' + schoolId).then((res)=>{
+        Loading.hide();
+        let response = res.data;
+        let categorys = response.data;
+
+
+        // 勾选查询到的分类
+        _this.tree2.checkAllNodes(false);
+        for (let i = 0; i < categorys.length; i++) {
+          let node = _this.tree2.getNodeByParam("id", categorys[i].categoryId);
+          _this.tree2.checkNode(node, true);
+        }
+      })
     },
   }
 }

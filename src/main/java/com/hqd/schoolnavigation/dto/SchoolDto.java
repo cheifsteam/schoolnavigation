@@ -27,14 +27,14 @@ public class SchoolDto {
 
     private String info;
 
-    private List<Category> categoryList;
+    private List<CategoryDto> categorys;
 
-    public List<Category> getCategoryList() {
-        return categoryList;
+    public List<CategoryDto> getCategorys() {
+        return categorys;
     }
 
-    public void setCategoryList(List<Category> categoryList) {
-        this.categoryList = categoryList;
+    public void setCategorys(List<CategoryDto> categorys) {
+        this.categorys = categorys;
     }
 
     public Integer getId() {

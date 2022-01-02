@@ -24,6 +24,12 @@ public class CategoryController {
         categoryService.addTopLevelCategory(categoryDto);
         return AjaxResult.success("添加成功");
     }
+
+    @PostMapping("/admin/category/updataTop")
+    public AjaxResult updataCategory(@RequestBody CategoryDto categoryDto) {
+        categoryService.updataCategory(categoryDto);
+        return AjaxResult.success("修改成功");
+    }
     @PostMapping("/admin/category/addSecondary")
     public  AjaxResult addSecondaryLevelCategory(@RequestBody CategoryDto categoryDto)
     {
@@ -49,5 +55,13 @@ public class CategoryController {
         final List subLevelCategory = categoryService.getSubLevelCategory(parent);
         return AjaxResult.success("获取成功",subLevelCategory);
     }
+
+    @PostMapping("/admin/category/getall")
+    public AjaxResult getAllCategory()
+    {
+        final List allCategory = categoryService.getAllCategory();
+        return AjaxResult.success("获取成功", allCategory);
+    }
+
 
 }

@@ -1,5 +1,9 @@
 package com.hqd.schoolnavigation.domain;
 
+import com.hqd.schoolnavigation.dto.CategoryDto;
+
+import java.util.List;
+
 public class School {
     private Integer id;
 

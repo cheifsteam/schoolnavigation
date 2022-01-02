@@ -9,6 +9,7 @@ import com.hqd.schoolnavigation.dto.SchoolDto;
 import com.hqd.schoolnavigation.mapper.SchoolMapper;
 import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -22,6 +23,7 @@ import java.util.List;
 public class SchoolService {
     @Resource
     private SchoolMapper schoolMapper;
+
     @Resource
     private SchoolCategoryService schoolCategoryService;
 
@@ -33,10 +35,15 @@ public class SchoolService {
         SchoolList(pageDto,schoolExample);
 
     }
+
+    @Transactional
     public void addSchool(SchoolDto schoolDto) {
         School school = BeanCopyUtils.copyBean(schoolDto, School.class);
-        schoolCategoryService.addCategory(school.getId(),schoolDto.getCategoryList());
         schoolMapper.insert(school);
+        System.out.println("Makiori:" + schoolDto.getCategorys());
+        schoolCategoryService.addCategory(school.getId(),schoolDto.getCategorys());
+
+
     }
     public void deleteSchool(Integer id){
         schoolCategoryService.deleteCategory(id);
@@ -61,7 +68,7 @@ public class SchoolService {
     {
         schoolExample=new SchoolExample();
         School school = BeanCopyUtils.copyBean(schoolDto, School.class);
-        schoolCategoryService.updateCategory(school.getId(),schoolDto.getCategoryList());
+        schoolCategoryService.updateCategory(school.getId(),schoolDto.getCategorys());
         schoolMapper.updateByPrimaryKeySelective(school);
 
     }

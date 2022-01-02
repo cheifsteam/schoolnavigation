@@ -59,6 +59,12 @@
     from school_category
     where id = #{id,jdbcType=VARCHAR}
   </select>
+  <delete id="deleteByExample" parameterType="com.hqd.schoolnavigation.domain.SchoolCategory">
+    delete from school_category
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from school_category
     where id = #{id,jdbcType=VARCHAR}
