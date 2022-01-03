@@ -87,7 +87,7 @@ public class SchoolController {
         return AjaxResult.success("获取成功",school);
     }
     /**
-     * 查找学习下所有分类
+     * 查找学校下所有分类
      * @param schoolId
      */
     @PostMapping("/admin/school/list-category/{schoolId}")

@@ -1,11 +1,6 @@
 <template>
   <div>
     <p>
-      <button v-on:click="add()" class="btn btn-white btn-default btn-round">
-        <i class="ace-icon fa fa-edit"></i>
-        新增
-      </button>
-      &nbsp;
       <button v-on:click="list(1)" class="btn btn-white btn-default btn-round">
         <i class="ace-icon fa fa-refresh"></i>
         刷新
@@ -21,29 +16,18 @@
         <th>用户登录名</th>
         <th>用户昵称</th>
         <th>用户密码</th>
-        <th>操作</th>
+        <th>用户头像</th>
       </tr>
       </thead>
 
       <tbody>
       <tr v-for="user in users">
         <td>{{user.id}}</td>
-        <td>{{user.admin_name}}</td>
+        <td>{{user.phoneNumber}}</td>
         <td>{{user.nickname}}</td>
         <td>{{user.password}}</td>
         <td>{{user.img}}</td>
 
-
-        <td>
-          <div class="hidden-sm hidden-xs btn-group">
-            <button v-on:click="edit(user)" class="btn btn-xs btn-info">
-              <i class="ace-icon fa fa-pencil bigger-120"></i>
-            </button>
-            <button v-on:click="del(user.id)" class="btn btn-xs btn-danger">
-              <i class="ace-icon fa fa-trash-o bigger-120"></i>
-            </button>
-          </div>
-        </td>
       </tr>
       </tbody>
     </table>
@@ -53,7 +37,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">新增管理员</h4>
+            <h4 class="modal-title">新增用户账号</h4>
           </div>
           <div class="modal-body">
 
@@ -62,7 +46,7 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员id</label>
+                <label class="col-sm-2 control-label">用户id</label>
                 <div class="col-sm-10">
                   <input v-model="user.id" class="form-control">
                 </div>
@@ -70,21 +54,21 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员账号</label>
+                <label class="col-sm-2 control-label">用户账号</label>
                 <div class="col-sm-10">
                   <input v-model="user.admin_name" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员昵称</label>
+                <label class="col-sm-2 control-label">用户昵称</label>
                 <div class="col-sm-10">
                   <input v-model="user.nickname" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员密码</label>
+                <label class="col-sm-2 control-label">用户密码</label>
                 <div class="col-sm-10">
                   <input v-model="user.password" class="form-control">
                 </div>
@@ -92,7 +76,7 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员头像</label>
+                <label class="col-sm-2 control-label">用户头像</label>
                 <div class="col-sm-10">
                   <input v-model="user.img" class="form-control">
                 </div>
@@ -116,7 +100,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">修改管理员信息</h4>
+            <h4 class="modal-title">修改用户信息</h4>
           </div>
           <div class="modal-body">
 
@@ -125,7 +109,7 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员id</label>
+                <label class="col-sm-2 control-label">用户id</label>
                 <div class="col-sm-10">
                   <input v-model="user.id" class="form-control">
                 </div>
@@ -133,21 +117,21 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员账号</label>
+                <label class="col-sm-2 control-label">用户账号</label>
                 <div class="col-sm-10">
                   <input v-model="user.admin_name" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员昵称</label>
+                <label class="col-sm-2 control-label">用户昵称</label>
                 <div class="col-sm-10">
                   <input v-model="user.nickname" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员密码</label>
+                <label class="col-sm-2 control-label">用户密码</label>
                 <div class="col-sm-10">
                   <input v-model="user.password" class="form-control">
                 </div>
@@ -155,7 +139,7 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员头像</label>
+                <label class="col-sm-2 control-label">用户头像</label>
                 <div class="col-sm-10">
                   <input v-model="user.img" class="form-control">
                 </div>

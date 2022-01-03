@@ -35,24 +35,24 @@
               </a>
 
               <ul class="user-menu dropdown-menu-right dropdown-menu dropdown-yellow dropdown-caret dropdown-close">
-                <li>
-                  <a href="#">
-                    <i class="ace-icon fa fa-cog"></i>
-                    设置
-                  </a>
-                </li>
+<!--                <li>-->
+<!--                  <a href="#">-->
+<!--                    <i class="ace-icon fa fa-cog"></i>-->
+<!--                    设置-->
+<!--                  </a>-->
+<!--                </li>-->
+
+<!--                <li>-->
+<!--                  <a href="profile.html">-->
+<!--                    <i class="ace-icon fa fa-user"></i>-->
+<!--                    主页-->
+<!--                  </a>-->
+<!--                </li>-->
+
+<!--                <li class="divider"></li>-->
 
                 <li>
-                  <a href="profile.html">
-                    <i class="ace-icon fa fa-user"></i>
-                    主页
-                  </a>
-                </li>
-
-                <li class="divider"></li>
-
-                <li>
-                  <a href="#">
+                  <a v-on:click="logout()" href="#">
                     <i class="ace-icon fa fa-power-off"></i>
                     退出
                   </a>
@@ -220,6 +220,11 @@
 
 export default {
   name: 'admin',
+  data: function () {
+    return {
+      loginUser: {},
+    }
+  },
   mounted:function() {
     let _this = this;
     $('body').removeClass('login-layout light-login');
@@ -228,6 +233,8 @@ export default {
 
     $.getScript('/ace/assets/js/ace.min.js');
     //_this.activeSidebar(_this.$route.name.replace("/", "-") + "-sidebar");
+
+    _this.loginUser = Tool.getLoginUser();
   },
   methods: {
     login(){
@@ -251,6 +258,21 @@ export default {
         parentLi.siblings().find("li").removeClass("active");
         parentLi.addClass("open active");
       }
+    },
+
+    logout () {
+      let _this = this;
+      Loading.show();
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/admin/signOut').then((response)=>{
+        Loading.hide();
+        let resp = response.data;
+        if (resp.code == 200) {
+          Tool.setLoginUser(null);
+          _this.$router.push("/login")
+        } else {
+          Toast.warning(resp.message)
+        }
+      });
     },
   }
 }

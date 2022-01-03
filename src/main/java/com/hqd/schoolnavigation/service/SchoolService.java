@@ -36,6 +36,7 @@ public class SchoolService {
 
     }
 
+
     @Transactional
     public void addSchool(SchoolDto schoolDto) {
         School school = BeanCopyUtils.copyBean(schoolDto, School.class);

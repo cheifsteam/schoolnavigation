@@ -45,10 +45,6 @@
                         <div class="space"></div>
 
                         <div class="clearfix">
-                          <label class="inline">
-                            <input type="checkbox" class="ace" />
-                            <span class="lbl">记住我</span>
-                          </label>
 
                           <button type="button"
                                   class="width-35 pull-right btn btn-sm btn-primary"

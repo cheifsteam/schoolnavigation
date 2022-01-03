@@ -101,7 +101,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校级别</label>
                 <div class="col-sm-10">
-                  <input v-model="school.level" class="form-control">
+                  <select v-model="school.level" class="form-control">
+                    <option v-for="o in SCHOOL_TYPE" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
                 </div>
               </div>
 
@@ -191,7 +193,9 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校级别</label>
                 <div class="col-sm-10">
-                  <input v-model="school.level" class="form-control">
+                  <select v-model="school.level" class="form-control">
+                    <option v-for="o in SCHOOL_TYPE" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
                 </div>
               </div>
 
@@ -252,6 +256,7 @@ export default {
       categorys: [],
       tree1: {},
       tree2: {},
+      SCHOOL_TYPE: SCHOOL_TYPE,
     }
   },
   mounted: function() {
