@@ -31,5 +31,9 @@ public class SchoolInformationService {
     {
         schoolInformationMapper.deleteByPrimaryKey(id);
     }
+    public void getInformationBySchoolId(Integer SchoolId)
+    {
+
+    }
 
 }
