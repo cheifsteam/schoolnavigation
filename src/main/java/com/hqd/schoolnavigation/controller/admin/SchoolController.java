@@ -76,6 +76,17 @@ public class SchoolController {
     }
 
     /**
+     * 根据学校id获取学校信息
+     * @param Id
+     * @return
+     */
+    @PostMapping("/admin/school/get/{Id}")
+    public AjaxResult getSchoolBySchoolId(@PathVariable Integer Id)
+    {
+        final School school= schoolService.getSchoolBySchoolId(Id);
+        return AjaxResult.success("获取成功",school);
+    }
+    /**
      * 查找学习下所有分类
      * @param schoolId
      */

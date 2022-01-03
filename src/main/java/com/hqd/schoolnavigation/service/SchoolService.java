@@ -81,5 +81,9 @@ public class SchoolService {
         pageDto.setTotal((int) pageInfo.getTotal());
         pageDto.setData(schoolDtos);
     }
+    public School getSchoolBySchoolId(Integer Id)
+    {
+        return  schoolMapper.selectByPrimaryKey(Id);
+    }
 
 }
