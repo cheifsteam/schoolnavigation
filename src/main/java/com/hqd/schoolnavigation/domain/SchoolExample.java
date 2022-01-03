@@ -114,7 +114,7 @@ public class SchoolExample {
             return (Criteria) this;
         }
 
-        public Criteria andIdEqualTo(Integer value) {
+        public Criteria andIdEqualTo(List<Integer> value) {
             addCriterion("id =", value, "id");
             return (Criteria) this;
         }

@@ -1,7 +1,5 @@
 package com.hqd.schoolnavigation.controller.web;
 
-import com.github.pagehelper.Page;
-import com.hqd.schoolnavigation.domain.School;
 import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.PageDto;
 import com.hqd.schoolnavigation.service.SchoolCategoryService;
@@ -9,6 +7,7 @@ import com.hqd.schoolnavigation.service.SchoolService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author 屈燃希
@@ -57,10 +56,11 @@ private SchoolCategoryService schoolCategoryService;
     public AjaxResult getAllSchool(@PathVariable(required = false) String categoryId,  @RequestBody PageDto pageDto)
     {
         if (categoryId!=null){
-            final Integer schoolIdByCategoryId = schoolCategoryService.getSchoolIdByCategoryId(categoryId);
+            final List<Integer> Id = schoolCategoryService.getSchoolIdByCategoryId(categoryId);
 
-            final School school = schoolService.getSchoolBySchoolId(schoolIdByCategoryId);
-            return AjaxResult.success(school);
+            schoolService.getAllSchoolBySchoolId(Id,pageDto);
+
+            return AjaxResult.success(pageDto);
         }
         else {
             schoolService.getAllSchool(pageDto);

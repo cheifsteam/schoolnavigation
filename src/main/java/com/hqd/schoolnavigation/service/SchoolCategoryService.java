@@ -1,9 +1,7 @@
 package com.hqd.schoolnavigation.service;
 
-import com.hqd.schoolnavigation.domain.Category;
 import com.hqd.schoolnavigation.domain.SchoolCategory;
 import com.hqd.schoolnavigation.domain.SchoolCategoryExample;
-import com.hqd.schoolnavigation.dto.AdminDto;
 import com.hqd.schoolnavigation.dto.CategoryDto;
 import com.hqd.schoolnavigation.dto.SchoolCategoryDto;
 import com.hqd.schoolnavigation.mapper.SchoolCategoryMapper;
@@ -71,9 +69,9 @@ public class SchoolCategoryService {
         System.out.println(schoolCategoryList.toString());
         return schoolCategoryList;
     }
-    public Integer getSchoolIdByCategoryId(String CategoryId)
+    public List<Integer> getSchoolIdByCategoryId(String CategoryId)
     {
-        final Integer schoolId = schoolCategoryMapper.selectSchoolIdByCategoryId(CategoryId);
+        final List<Integer> schoolId = schoolCategoryMapper.selectSchoolIdByCategoryId(CategoryId);
         return schoolId;
     }
 }

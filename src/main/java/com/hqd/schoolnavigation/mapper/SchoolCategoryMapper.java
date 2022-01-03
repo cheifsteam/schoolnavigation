@@ -22,5 +22,5 @@ public interface SchoolCategoryMapper {
     int updateByPrimaryKey(SchoolCategory record);
 
     int deleteBySchoolId(Integer id);
-    Integer selectSchoolIdByCategoryId(String categoryId);
+    List<Integer> selectSchoolIdByCategoryId(String categoryId);
 }

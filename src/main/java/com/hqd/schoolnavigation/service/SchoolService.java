@@ -88,5 +88,12 @@ public class SchoolService {
     {
         return  schoolMapper.selectByPrimaryKey(Id);
     }
+    public  void getAllSchoolBySchoolId(List<Integer> Id, PageDto pageDto)
+    {
+        schoolExample=new SchoolExample();
+        final SchoolExample.Criteria criteria = schoolExample.createCriteria().andIdIn(Id);
+        schoolExample.or(criteria);
+        SchoolList(pageDto,schoolExample);
+    }
 
 }

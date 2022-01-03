@@ -50,7 +50,7 @@ public class SchoolInformationController {
         schoolInformationService.updateInformation(schoolInformationDto);
         return AjaxResult.success("更新成功");
     }
-    @PostMapping("/admim/schoolInformation/getAll")
+    @PostMapping("/admin/schoolInformation/getAll")
     public AjaxResult getAllInformation(@RequestBody PageDto pageDto)
     {
         schoolInformationService.getAllInformation(pageDto);

@@ -17,10 +17,10 @@
     <table id="simple-table" class="table  table-bordered table-hover">
       <thead>
       <tr>
-        <th>用户id</th>
-        <th>用户登录名</th>
-        <th>用户昵称</th>
-        <th>用户密码</th>
+        <th>资讯id</th>
+        <th>资讯题目</th>
+        <th>发表时间</th>
+        <th>内容</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -28,10 +28,11 @@
       <tbody>
       <tr v-for="shchoolinfo in shchoolinfos">
         <td>{{shchoolinfo.id}}</td>
-        <td>{{shchoolinfo.admin_name}}</td>
-        <td>{{shchoolinfo.nickname}}</td>
-        <td>{{shchoolinfo.password}}</td>
-        <td>{{shchoolinfo.img}}</td>
+        <td>{{shchoolinfo.title}}</td>
+        <td>{{shchoolinfo.time}}</td>
+        <td>{{shchoolinfo.info}}</td>
+        <td>{{shchoolinfo.schoolId}}</td>
+
 
 
         <td>
@@ -53,7 +54,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">新增管理员</h4>
+            <h4 class="modal-title">新增资讯</h4>
           </div>
           <div class="modal-body">
 
@@ -62,7 +63,7 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员id</label>
+                <label class="col-sm-2 control-label">资讯id</label>
                 <div class="col-sm-10">
                   <input v-model="shchoolinfo.id" class="form-control">
                 </div>
@@ -70,31 +71,31 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员账号</label>
+                <label class="col-sm-2 control-label">资讯题目</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.admin_name" class="form-control">
+                  <input v-model="shchoolinfo.title" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员昵称</label>
+                <label class="col-sm-2 control-label">发布时间</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.nickname" class="form-control">
+                  <input type="date" v-model="shchoolinfo.time" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员密码</label>
+                <label class="col-sm-2 control-label">资讯内容</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.password" class="form-control">
+                  <input v-model="shchoolinfo.info" class="form-control">
                 </div>
               </div>
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员头像</label>
+                <label class="col-sm-2 control-label">学校id</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.img" class="form-control">
+                  <input v-model="shchoolinfo.schoolId" class="form-control">
                 </div>
               </div>
 
@@ -116,7 +117,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title">修改管理员信息</h4>
+            <h4 class="modal-title">修改资讯信息</h4>
           </div>
           <div class="modal-body">
 
@@ -125,7 +126,7 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员id</label>
+                <label class="col-sm-2 control-label">资讯id</label>
                 <div class="col-sm-10">
                   <input v-model="shchoolinfo.id" class="form-control">
                 </div>
@@ -133,31 +134,31 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员账号</label>
+                <label class="col-sm-2 control-label">资讯题目</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.admin_name" class="form-control">
+                  <input v-model="shchoolinfo.title" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员昵称</label>
+                <label class="col-sm-2 control-label">发布时间</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.nickname" class="form-control">
+                  <input v-model="shchoolinfo.time" class="form-control">
                 </div>
               </div>
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员密码</label>
+                <label class="col-sm-2 control-label">资讯内容</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.password" class="form-control">
+                  <input v-model="shchoolinfo.info" class="form-control">
                 </div>
               </div>
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">管理员头像</label>
+                <label class="col-sm-2 control-label">学校Id</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.img" class="form-control">
+                  <input v-model="shchoolinfo.schoolId" class="form-control">
                 </div>
               </div>
 
@@ -222,7 +223,7 @@ export default {
      */
     list(page) {
       let _this = this;
-      _this.$ajax.post(process.env.VUE_APP_SERVER+'/admin/shchoolinfo/getAll', {
+      _this.$ajax.post(process.env.VUE_APP_SERVER+'/admin/schoolInformation/getAll', {
         page: page,
         pageSize: _this.$refs.pagination.size,
       }).then((response)=>{
@@ -244,7 +245,7 @@ export default {
 
       Loading.show();
       console.log(_this.shchoolinfo);
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/shchoolinfo/add', _this.shchoolinfo).then((response)=>{
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/schoolInformation/add', _this.shchoolinfo).then((response)=>{
 
         Loading.hide();
         let resp = response.data;
@@ -265,7 +266,7 @@ export default {
       let _this = this;
       Loading.show();
       console.log(_this.shchoolinfo);
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/shchoolinfo/update', _this.shchoolinfo).then((response)=>{
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/schoolInformation/update', _this.shchoolinfo).then((response)=>{
         Loading.hide();
         let resp = response.data;
         if (resp) {
@@ -285,7 +286,7 @@ export default {
       let _this = this;
       Confirm.show("删除学校信息后不可恢复，确认删除？", function () {
         Loading.show();
-        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/admin/shchoolinfo/delete/' + id).then((response)=>{
+        _this.$ajax.delete(process.env.VUE_APP_SERVER+'/admin/schoolInformation/delete/' + id).then((response)=>{
           Loading.hide();
           let resp = response.data;
           if (resp) {
