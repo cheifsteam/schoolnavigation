@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,6 +36,10 @@ public class SchoolInformationService {
         return schoolInformation;
     }
     public void  addInformation(SchoolInformationDto schoolInformationDto){
+        if (schoolInformationDto.getTime()==null)
+        {
+            schoolInformationDto.setTime(new Date());
+        }
         final SchoolInformation schoolInformation = BeanCopyUtils.copyBean(schoolInformationDto, SchoolInformation.class);
         schoolInformationMapper.insert(schoolInformation);
     }

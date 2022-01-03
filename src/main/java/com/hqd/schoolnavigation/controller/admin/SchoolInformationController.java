@@ -56,4 +56,5 @@ public class SchoolInformationController {
         schoolInformationService.getAllInformation(pageDto);
         return AjaxResult.success("获取成功",pageDto);
     }
+
 }

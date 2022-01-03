@@ -14,6 +14,25 @@ public class UserDto {
     private String password;
 
     private String nickname;
+    private String token;
+
+    public UserDto() {
+    }
+
+    public UserDto(Integer id, String nickname, String token) {
+        this.id = id;
+        this.nickname = nickname;
+        this.token = token;
+
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
 
     private String salt;
     private String img;
@@ -85,5 +104,14 @@ public class UserDto {
 
     public void setNewPassword(String newPassword) {
         this.newPassword = newPassword;
+    }
+
+    @Override
+    public String toString() {
+        return "UserDto{" +
+                "id=" + id +
+                ", nickname='" + nickname + '\'' +
+                ", token='" + token + '\'' +
+                '}';
     }
 }
