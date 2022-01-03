@@ -55,12 +55,16 @@ public class UserSchoolController {
      * @return
      */
     @PostMapping("/web/school/getAllSchool")
-    public AjaxResult getAllSchool(@RequestBody PageDto pageDto)
-
+    public AjaxResult getAllSchool(@RequestParam(required = false) Integer Id,@RequestBody PageDto pageDto)
     {
-        schoolService.getAllSchool(pageDto);
-        return AjaxResult.success(pageDto);
+        if (Id==null)
+        {
+            schoolService.getSchoolBySchoolId(Id);
+        }else {
+            schoolService.getAllSchool(pageDto);
 
+        }
+        return AjaxResult.success(pageDto);
     }
 
 }
