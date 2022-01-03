@@ -82,11 +82,11 @@ public class UserService {
         return users.get(0);
     }
     public void getAllUsers(PageDto pageDto){
-        PageHelper.startPage(pageDto.getPage(),pageDto.getPageSize());
         userExample=new UserExample();
+        PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
         List<User> users = userMapper.selectByExample(userExample);
-        List<UserDto> userDtos = BeanCopyUtils.copyListProperties(users, UserDto::new);
-        PageInfo<UserDto> pageInfo=new PageInfo<>(userDtos);
+        PageInfo<User> pageInfo=new PageInfo<>(users);
+        List<UserDto> userDtos = BeanCopyUtils.copyListProperties(users,UserDto::new);
         pageDto.setTotal((int) pageInfo.getTotal());
         pageDto.setData(userDtos);
     }

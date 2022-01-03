@@ -23,22 +23,22 @@ public class UserController {
     public UserService userService;
     @Resource
     public RedisCache redisCache;
-    @PostMapping("/web/user/add")
+    @PostMapping("/admin/user/add")
     public AjaxResult addUser(@RequestBody UserDto userDto){
         userService.addUser(userDto);
         return AjaxResult.success();
     }
-    @DeleteMapping("/web/user/delete/{id}")
+    @DeleteMapping("/admin/user/delete/{id}")
     public AjaxResult deleteUser(@PathVariable Integer id)
     {
         userService.deleteUser(id);
         return AjaxResult.success();
     }
-    @PostMapping("/web/user/getAll")
-    public AjaxResult getAllUsers(@RequestBody PageDto pageDto)
+    @PostMapping("/admin/user/getAll")
+    public AjaxResult getAllUsers(@RequestBody(required = false) PageDto pageDto)
     {
         userService.getAllUsers(pageDto);
-        return AjaxResult.success(pageDto);
+        return AjaxResult.success("获取成功",pageDto);
     }
     @PostMapping("/web/user/login")
     public AjaxResult userLogin(@RequestBody UserDto userDto)
