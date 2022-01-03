@@ -2,11 +2,14 @@ package com.hqd.schoolnavigation.service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import com.hqd.schoolnavigation.domain.SchoolInformation;
 import com.hqd.schoolnavigation.domain.SchoolExample;
 import com.hqd.schoolnavigation.domain.SchoolInformation;
 import com.hqd.schoolnavigation.domain.SchoolInformationExample;
 import com.hqd.schoolnavigation.dto.PageDto;
 import com.hqd.schoolnavigation.dto.SchoolInformationDto;
+import com.hqd.schoolnavigation.dto.SchoolInformationDto;
+import com.hqd.schoolnavigation.excpetion.MyException;
 import com.hqd.schoolnavigation.mapper.SchoolInformationMapper;
 import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
 import org.springframework.stereotype.Service;
@@ -45,10 +48,31 @@ public class SchoolInformationService {
         schoolInformationExample=new SchoolInformationExample();
         final SchoolInformationExample.Criteria criteria = schoolInformationExample.createCriteria().andSchoolIdEqualTo(SchoolId);
         schoolInformationExample.or(criteria);
-        final List<SchoolInformation> schoolInformations = schoolInformationMapper.selectByExampleWithBLOBs(schoolInformationExample);
-        PageInfo<SchoolInformation> pageInfo=new PageInfo<>();
+        schoolInformationList(pageDto,schoolInformationExample);
+    }
+    public void updateInformation(SchoolInformationDto schoolInformationDto)
+    {
+        if (getInformation(schoolInformationDto.getId())==null)
+        {
+            throw new MyException("该资讯不存在");
+        }
+        final SchoolInformation schoolInformation = BeanCopyUtils.copyBean(schoolInformationDto, SchoolInformation.class);
+        schoolInformationMapper.updateByPrimaryKeySelective(schoolInformation);
+
+    }
+    public void getAllInformation(PageDto pageDto)
+    {
+        schoolInformationExample=new SchoolInformationExample();
+        schoolInformationList(pageDto,schoolInformationExample);
+    }
+    public void schoolInformationList(PageDto pageDto,SchoolInformationExample schoolInformationExample)
+    {
+        PageHelper.startPage(pageDto.getPage(), pageDto.getPageSize());
+        List<SchoolInformation> schoolInformations = schoolInformationMapper.selectByExampleWithBLOBs(schoolInformationExample);
+        PageInfo<SchoolInformation> pageInfo=new PageInfo<>(schoolInformations);
+        List<SchoolInformationDto> schoolInformationDtos = BeanCopyUtils.copyListProperties(schoolInformations,SchoolInformationDto::new);
         pageDto.setTotal((int) pageInfo.getTotal());
-        pageDto.setData(schoolInformations);
+        pageDto.setData(schoolInformationDtos);
     }
 
 
