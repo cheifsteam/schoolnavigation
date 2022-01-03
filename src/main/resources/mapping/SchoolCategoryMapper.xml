@@ -122,4 +122,10 @@
     delete from school_category
     where school_id = #{schoolId,jdbcType=INTEGER}
   </delete>
+  <select id="selectSchoolIdByCategoryId" parameterType="java.lang.String" resultType="java.lang.Integer">
+    select
+    school_id
+    from school_category
+    where  category_id = #{categoryId,jdbcType=VARCHAR}
+  </select>
 </mapper>

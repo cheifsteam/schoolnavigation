@@ -4,11 +4,9 @@ import com.github.pagehelper.Page;
 import com.hqd.schoolnavigation.domain.School;
 import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.PageDto;
+import com.hqd.schoolnavigation.service.SchoolCategoryService;
 import com.hqd.schoolnavigation.service.SchoolService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -21,7 +19,8 @@ import javax.annotation.Resource;
 public class UserSchoolController {
     @Resource
     private SchoolService schoolService;
-
+@Resource
+private SchoolCategoryService schoolCategoryService;
     /**
      * 首页获取学校
      * @return
@@ -54,13 +53,16 @@ public class UserSchoolController {
      * @param pageDto
      * @return
      */
-    @PostMapping("/web/school/getAllSchool")
-    public AjaxResult getAllSchool(@RequestParam(required = false) Integer Id,@RequestBody PageDto pageDto)
+    @PostMapping("/web/school/getAllSchool/{categoryId}")
+    public AjaxResult getAllSchool(@PathVariable String categoryId,  @RequestBody PageDto pageDto)
     {
-        if (Id==null)
-        {
-            schoolService.getSchoolBySchoolId(Id);
-        }else {
+        if (categoryId!=null){
+            final Integer schoolIdByCategoryId = schoolCategoryService.getSchoolIdByCategoryId(categoryId);
+
+            final School school = schoolService.getSchoolBySchoolId(schoolIdByCategoryId);
+            return AjaxResult.success(school);
+        }
+        else {
             schoolService.getAllSchool(pageDto);
 
         }

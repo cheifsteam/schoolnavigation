@@ -71,4 +71,9 @@ public class SchoolCategoryService {
         System.out.println(schoolCategoryList.toString());
         return schoolCategoryList;
     }
+    public Integer getSchoolIdByCategoryId(String CategoryId)
+    {
+        final Integer schoolId = schoolCategoryMapper.selectSchoolIdByCategoryId(CategoryId);
+        return schoolId;
+    }
 }
