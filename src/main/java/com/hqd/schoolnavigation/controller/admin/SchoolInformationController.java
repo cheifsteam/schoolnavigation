@@ -21,7 +21,7 @@ public class SchoolInformationController {
     private SchoolInformationService schoolInformationService;
 
     @PostMapping("/admin/schoolInformation/add")
-    public AjaxResult addInformation(SchoolInformationDto schoolInformationDto) {
+    public AjaxResult addInformation(@RequestBody  SchoolInformationDto schoolInformationDto) {
         schoolInformationService.addInformation(schoolInformationDto);
         return AjaxResult.success("添加成功");
     }

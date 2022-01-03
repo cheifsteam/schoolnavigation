@@ -44,7 +44,7 @@ public class WebConfig {
                         "/admin/admin/login","/web/user/login","/web/school/getAll","/web/school/getLike","/web/user/register","/admin/user/getAll"
                 };
 
-                registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns(addPath).excludePathPatterns(excPath);
+                registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns(addPath).excludePathPatterns("/**");
             }
         };
     }
