@@ -42,8 +42,8 @@ public class UserController {
     @PostMapping("/web/user/login")
     public AjaxResult userLogin(@RequestBody UserDto userDto)
     {
-        userService.userLogin(userDto);
-        return AjaxResult.success("登录成功",userDto);
+         Map<String, Object> data = userService.userLogin(userDto);
+        return AjaxResult.success("登录成功",data);
 
     }
     @PostMapping("/web/user/signOut")

@@ -39,7 +39,7 @@ public class UserService {
     private WebTokenUtil webTokenUtil;
     @Resource
     private HttpSession httpSession;
-    public void userLogin(UserDto userDto){
+    public Map<String,Object> userLogin(UserDto userDto){
         User user = getUserByPhoneNumber(userDto.getPhoneNumber());
         if (user==null){
             throw new MyException("账号错误");
@@ -52,8 +52,11 @@ public class UserService {
         String token=createWebToken(user);
         HttpHeaders headers = new HttpHeaders();
         headers.set("Set-Token", token);
-        userDto= new UserDto(user.getId(), user.getNickname(), token);
-        
+        HashMap<String,Object> hashMap=new HashMap();
+        hashMap.put("id",user.getId());
+        hashMap.put("nickname",user.getNickname());
+        hashMap.put("token",token);
+        return hashMap;
     }
     public void addUser(UserDto userDto){
         User user = BeanCopyUtils.copyBean(userDto, User.class);

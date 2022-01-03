@@ -46,6 +46,7 @@ public class SchoolService {
 
 
     }
+    @Transactional
     public void deleteSchool(Integer id){
         schoolCategoryService.deleteCategory(id);
         schoolMapper.deleteByPrimaryKey(id);
@@ -65,6 +66,7 @@ public class SchoolService {
         schoolExample.or(criteria1);
         SchoolList(pageDto,schoolExample);
     }
+
     public void updateSchool(SchoolDto schoolDto)
     {
         schoolExample=new SchoolExample();

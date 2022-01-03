@@ -64,8 +64,12 @@ public class CategoryService {
             throw new MyException("找不到该分类");
         }
 
-        deleteChildren(id);
-        categoryMapper.deleteByPrimaryKey(id);
+        try {
+            deleteChildren(id);
+            categoryMapper.deleteByPrimaryKey(id);
+        } catch (Exception e) {
+           throw new MyException("若想删除该分类请删除该分类的所有学校");
+        }
     }
 
     /**
