@@ -57,7 +57,10 @@ private SchoolCategoryService schoolCategoryService;
     {
         if (categoryId!=null){
             final List<Integer> Id = schoolCategoryService.getSchoolIdByCategoryId(categoryId);
-
+            if (Id.isEmpty())
+            {
+                return AjaxResult.success(pageDto);
+            }
             schoolService.getAllSchoolBySchoolId(Id,pageDto);
 
             return AjaxResult.success(pageDto);
