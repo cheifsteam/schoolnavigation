@@ -7,6 +7,7 @@ import com.hqd.schoolnavigation.service.CommentService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 /**
  * @author 屈燃希
@@ -17,9 +18,13 @@ import javax.annotation.Resource;
 public class UserCommentController {
     @Resource
     public CommentService commentService;
+    @Resource
+    public HttpSession httpSession;
     @PostMapping("/web/user/addComment")
     public AjaxResult addComment(@RequestBody CommentDto commentDto)
     {
+        Integer userId = (Integer) httpSession.getAttribute("id");
+        commentDto.setUserId(userId);
         commentService.addComment(commentDto);
         return AjaxResult.success("添加成功");
     }
@@ -29,9 +34,10 @@ public class UserCommentController {
         commentService.deleteComment(Id);
         return AjaxResult.success("删除成功");
     }
-    @PostMapping("/web/user/getCommentByUserId/{userId}")
-    public AjaxResult getCommentByUserId(@PathVariable Integer userId, PageDto pageDto)
+    @PostMapping("/web/user/getCommentByUserId")
+    public AjaxResult getCommentByUserId(@RequestBody PageDto pageDto)
     {
+        Integer userId = (Integer) httpSession.getAttribute("id");
         commentService.getCommentByUserId(userId,pageDto);
         return AjaxResult.success("获取成功",pageDto);
     }

@@ -17,12 +17,7 @@ import javax.annotation.Resource;
 public class CommentController {
     @Resource
     public CommentService commentService;
-    @PostMapping("/admin/user/addComment")
-    public AjaxResult addComment(@RequestBody CommentDto commentDto)
-    {
-        commentService.addComment(commentDto);
-        return AjaxResult.success("添加成功");
-    }
+
     @DeleteMapping("/admin/user/deleteComment/{Id}")
     public AjaxResult deleteComment(@PathVariable Integer Id)
     {

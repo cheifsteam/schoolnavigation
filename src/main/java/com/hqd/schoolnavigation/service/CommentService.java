@@ -26,11 +26,12 @@ public class CommentService {
     @Resource
     private CommentMapper commentMapper;
     private CommentExample commentExample;
-    @Autowired
+    @Resource
     private HttpSession httpSession;
     public void addComment(CommentDto commentDto)
     {
-        final Comment comment = BeanCopyUtils.copyBean(commentDto, Comment.class);
+
+        Comment comment = BeanCopyUtils.copyBean(commentDto, Comment.class);
         commentMapper.insert(comment);
     }
     public void deleteComment(Integer id)
@@ -60,9 +61,5 @@ public class CommentService {
         pageDto.setData(list);
 
     }
-    public void Identify()
-    {
-        
 
-    }
 }
