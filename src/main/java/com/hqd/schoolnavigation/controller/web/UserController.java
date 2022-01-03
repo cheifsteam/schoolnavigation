@@ -4,13 +4,12 @@ import com.hqd.schoolnavigation.Redis.RedisCache;
 import com.hqd.schoolnavigation.dto.UserDto;
 import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.PageDto;
-import com.hqd.schoolnavigation.dto.UserDto;
 import com.hqd.schoolnavigation.service.UserService;
-import org.apache.ibatis.annotations.Delete;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @author 屈燃希
@@ -43,8 +42,8 @@ public class UserController {
     @PostMapping("/web/user/login")
     public AjaxResult userLogin(@RequestBody UserDto userDto)
     {
-        String token = userService.userLogin(userDto);
-        return AjaxResult.success("操作成功",token);
+        Map<String, String> data = userService.userLogin(userDto);
+        return AjaxResult.success("登录成功",data);
 
     }
     @PostMapping("/web/user/signOut")
