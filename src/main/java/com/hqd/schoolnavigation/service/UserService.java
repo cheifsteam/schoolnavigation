@@ -135,7 +135,7 @@ public class UserService {
         User user = userMapper.selectByPrimaryKey(id);
         if (user==null)
         {
-            throw new MyException("管理员不存在");
+            throw new MyException("用户不存在");
         }
         if (userDto.getImg()==null)
         {

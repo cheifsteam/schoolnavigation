@@ -41,6 +41,6 @@ public class UserSchoolInformationController {
         pageDto.setPage(1);
         pageDto.setPageSize(10);
         schoolInformationService.getAllInformation(pageDto);
-        return AjaxResult.success(pageDto);
+        return AjaxResult.success("获取成功",pageDto);
     }
 }
