@@ -17,14 +17,22 @@
       <div class="container">
         <div class="title1">热门学校</div>
         <div class="row">
-
           <div v-for="o in news" class="col-md-4">
             <the-school v-bind:school="o"></the-school>
           </div>
+        </div>
 
+        <hr>
+
+        <div class="title2">热门资讯</div>
+        <div class="row">
+          <div v-for="i in infos" class="col-md-4">
+            <the-info v-bind:info="i"></the-info>
+          </div>
         </div>
       </div>
     </div>
+
 
   </main>
 </template>
@@ -32,17 +40,20 @@
 <script>
 
 import TheSchool from "../components/the-school";
+import TheInfo from "../components/the-info";
 export default {
   name: 'index',
-  components: {TheSchool},
+  components: {TheSchool, TheInfo},
   data: function () {
     return {
       news: [],
+      infos: [],
     }
   },
   mounted() {
     let _this = this;
     _this.listNew();
+    _this.listNewInfo();
   },
   methods: {
 
@@ -53,6 +64,19 @@ export default {
         if (resp.code == 200) {
           console.log(resp.data);
           _this.news = resp.data.data;
+        }
+      }).catch((response)=>{
+        console.log("error：", response);
+      })
+    },
+
+    listNewInfo() {
+      let _this = this;
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/schoolInformation/home').then((response)=>{
+        let resp = response.data;
+        if (resp.code == 200) {
+          console.log(resp.data);
+          _this.infos = resp.data.data;
         }
       }).catch((response)=>{
         console.log("error：", response);
