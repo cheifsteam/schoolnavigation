@@ -53,8 +53,8 @@ private SchoolCategoryService schoolCategoryService;
      * @param pageDto
      * @return
      */
-    @PostMapping("/web/school/getAllSchool/{categoryId}")
-    public AjaxResult getAllSchool(@PathVariable String categoryId,  @RequestBody PageDto pageDto)
+    @PostMapping(value = {"/web/school/getAllSchool/{categoryId}","/web/school/getAllSchool"})
+    public AjaxResult getAllSchool(@PathVariable(required = false) String categoryId,  @RequestBody PageDto pageDto)
     {
         if (categoryId!=null){
             final Integer schoolIdByCategoryId = schoolCategoryService.getSchoolIdByCategoryId(categoryId);
