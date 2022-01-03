@@ -32,8 +32,8 @@ public class SchoolInformationController {
         schoolInformationService.deleteInformation(Id);
         return AjaxResult.success("删除成功");
     }
-    @PostMapping("/admin/schoolInformation/getAll")
-    public AjaxResult getInformationBySchoolId(@RequestParam Integer SchoolId, @RequestBody PageDto pageDto)
+    @PostMapping("/admin/schoolInformation/getAllBySchoolId")
+    public AjaxResult getAllInformationBySchoolId(@RequestParam Integer SchoolId, @RequestBody PageDto pageDto)
     {
         schoolInformationService.getAllInformationBySchoolId(SchoolId,pageDto);
         return AjaxResult.success("获取成功",pageDto);
@@ -43,6 +43,18 @@ public class SchoolInformationController {
     {
         final SchoolInformation information = schoolInformationService.getInformation(Id);
         return AjaxResult.success("获取成功",information);
-
     }
+    @PostMapping("/admin/schoolInformation/update")
+    public AjaxResult updateInformation(@RequestBody SchoolInformationDto schoolInformationDto)
+    {
+        schoolInformationService.updateInformation(schoolInformationDto);
+        return AjaxResult.success("更新成功");
+    }
+    @PostMapping("/admim/schoolInformation/getAll")
+    public AjaxResult getAllInformation(@RequestBody PageDto pageDto)
+    {
+        schoolInformationService.getAllInformation(pageDto);
+        return AjaxResult.success("获取成功",pageDto);
+    }
+
 }
