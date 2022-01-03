@@ -19,14 +19,14 @@
 
           <nav class="navbar navbar-light bg-dark">
             <form class="form-inline">
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+              <input v-model="school.word" class="form-control mr-sm-2" type="search" placeholder="查询" aria-label="Search">
+              <router-link v-bind:to="'/list?word=' + school.word" class="btn btn-outline-success my-2 my-sm-0">查询</router-link>
             </form>
           </nav>
 
 
 
-          <router-link  v-show="loginUser.id" class="text-white pr-3" to="/information">您好： {{loginUser.name}}</router-link>
+          <span v-show="loginUser.id" class="text-white pr-3">您好： {{loginUser.nickname}}</span>
           <button v-show="loginUser.id" v-on:click="logout()" class="btn btn-outline-light my-2 my-sm-0">退出登录</button>
           <button v-show="!loginUser.id" v-on:click="openLoginModal()" class="btn btn-outline-light my-2 my-sm-0">登录/注册</button>
         </div>
@@ -45,7 +45,9 @@ export default {
   components: {TheLogin},
   data: function () {
     return {
-      loginUser: {}
+      user:{},
+      loginUser: {},
+      school: {},
     }
   },
   mounted() {
@@ -60,6 +62,11 @@ export default {
     openLoginModal() {
       let _this = this;
       _this.$refs.loginComponent.openLoginModal();
+    },
+
+    setLoginUser(loginUser) {
+      let _this = this;
+      _this.loginUser = loginUser;
     },
 
     logout () {

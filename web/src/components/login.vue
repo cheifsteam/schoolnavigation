@@ -3,15 +3,16 @@
     <div class="modal-dialog modal-login" role="document">
       <div class="modal-content">
         <div class="modal-body">
+
           <div class="login-div" v-show="MODAL_STATUS === STATUS_LOGIN">
             <h3>登&nbsp;&nbsp;录</h3>
 
             <div class="form-group">
-              <input v-model="member.phoneNumber" class="form-control" placeholder="手机号">
+              <input v-model="user.phoneNumber" class="form-control" placeholder="手机号">
             </div>
 
             <div class="form-group">
-              <input class="form-control" type="password" placeholder="密码" v-model="member.password">
+              <input class="form-control" type="password" placeholder="密码" v-model="user.password">
             </div>
 
 
@@ -37,22 +38,22 @@
           <div class="register-div" v-show="MODAL_STATUS === STATUS_REGISTER">
             <h3>注&nbsp;&nbsp;册</h3>
             <div class="form-group">
-              <input id="register-mobile" v-model="memberRegister.mobile"
+              <input id="register-mobile" v-model="userRegister.mobile"
                      class="form-control" placeholder="手机号">
             </div>
 
             <div class="form-group">
-              <input id="register-name" v-model="memberRegister.name"
+              <input id="register-name" v-model="userRegister.name"
                      class="form-control" placeholder="昵称">
             </div>
             <div class="form-group">
-              <input id="register-password" v-model="memberRegister.passwordOriginal"
+              <input id="register-password" v-model="userRegister.password"
                      class="form-control" placeholder="密码" type="password">
             </div>
             <div class="form-group">
-              <input id="register-confirm-password" v-model="memberRegister.confirm"
+              <input id="register-confirm-password" v-model="userRegister.confirm"
                      class="form-control" placeholder="确认密码"
-                     name="memberRegisterConfirm" type="password">
+                     name="userRegisterConfirm" type="password">
             </div>
 
             <div class="form-group">
@@ -82,11 +83,10 @@ export default {
       STATUS_REGISTER: "STATUS_REGISTER",
       MODAL_STATUS: "",
 
-      member: {},
-      memberRegister: {},
+      user: {},
+      userRegister: {},
 
       rememberMe: true, // 记住密码
-      imageCodeToken: ""
     }
   },
   mounted() {
@@ -103,9 +103,16 @@ export default {
       $("#login-modal").modal("show");
     },
 
-    //---------------登录框、注册框、忘记密码框切换-----------------
+    //---------------登录框、注册框-----------------
     toLoginDiv() {
       let _this = this;
+
+      // 从缓存中获取记住的用户名密码，如果获取不到，说明上一次没有勾选“记住我”
+      let rememberUser = LocalStorage.get(LOCAL_KEY_REMEMBER_USER);
+      if (rememberUser) {
+        _this.user = rememberUser;
+      }
+
       _this.MODAL_STATUS = _this.STATUS_LOGIN
     },
 
@@ -114,13 +121,12 @@ export default {
       _this.MODAL_STATUS = _this.STATUS_REGISTER
     },
 
-
     register() {
       let _this = this;
 
 
       // 调服务端注册接口
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/member/register', _this.memberRegister).then((response) => {
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/user/register', _this.userRegister).then((response) => {
         let resp = response.data;
         if (resp.success) {
           Toast.success("注册成功");
@@ -133,16 +139,34 @@ export default {
     //---------------登录框-----------------
     login () {
       let _this = this;
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/user/login', _this.member).then((response)=>{
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/user/login', _this.user).then((response)=>{
         let resp = response.data;
         if (resp.code == 200) {
           console.log("登录成功：", resp);
-          let loginMember = resp;
-          Tool.setLoginUser(resp);
+          let loginUser = resp.data;
+          Tool.setLoginUser(resp.data);
+
+          // 判断“记住我”
+          if (_this.rememberMe) {
+            // 如果勾选记住我，则将用户名密码保存到本地缓存
+
+            console.log(_this.user.phoneNumber);
+            console.log(_this.user.password);
+
+            LocalStorage.set(LOCAL_KEY_REMEMBER_USER, {
+              phoneNumber: _this.user.phoneNumber,
+              password: _this.user.password,
+            });
+          } else {
+            // 没有勾选“记住我”时，要把本地缓存清空，否则下次显示登录框时会自动显示用户名密码
+            LocalStorage.set(LOCAL_KEY_REMEMBER_USER, null);
+          }
+
+          _this.$parent.setLoginUser(loginUser);
           $("#login-modal").modal("hide");
         } else {
           Toast.warning(resp.msg);
-          _this.member.password = "";
+          _this.user.password = "";
         }
       });
     },

@@ -623,6 +623,8 @@ export default {
           if (resp.code == 200) {
             _this.all();
             Toast.success("删除成功！");
+          } else {
+            Toast.error(resp.msg);
           }
         })
       });
