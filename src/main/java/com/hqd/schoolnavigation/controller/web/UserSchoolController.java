@@ -6,6 +6,7 @@ import com.hqd.schoolnavigation.dto.AjaxResult;
 import com.hqd.schoolnavigation.dto.PageDto;
 import com.hqd.schoolnavigation.service.SchoolService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,7 +55,8 @@ public class UserSchoolController {
      * @return
      */
     @PostMapping("/web/school/getAllSchool")
-    public AjaxResult getAllSchool(PageDto pageDto)
+    public AjaxResult getAllSchool(@RequestBody PageDto pageDto)
+
     {
         schoolService.getAllSchool(pageDto);
         return AjaxResult.success(pageDto);
