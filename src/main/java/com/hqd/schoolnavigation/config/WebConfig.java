@@ -38,13 +38,13 @@ public class WebConfig {
             @Override
             public void addInterceptors(InterceptorRegistry registry) {
                 String[] addPath={
-                        "/admin/**"
+                        "/**"
                 };
                 String[] excPath={
-                        "/admin/admin/login","/web/user/login"
+                        "/admin/admin/login","/web/user/login","/web/school/getAll","/web/school/getLike"
                 };
 
-                registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns("/**").excludePathPatterns(excPath);
+                registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns(addPath).excludePathPatterns(excPath);
             }
         };
     }
