@@ -40,8 +40,8 @@ private SchoolCategoryService schoolCategoryService;
      * @param pageDto
      * @return
      */
-    @PostMapping("/web/school/getLike")
-    public AjaxResult getLike(@RequestParam(required = false) String filterName,@RequestParam PageDto pageDto)
+    @PostMapping("/web/school/getLike/{filterName}")
+    public AjaxResult getLike(@PathVariable(required = false) String filterName,@RequestBody PageDto pageDto)
     {
         schoolService.getLikeSchool(filterName,pageDto);
         return AjaxResult.success(pageDto);
