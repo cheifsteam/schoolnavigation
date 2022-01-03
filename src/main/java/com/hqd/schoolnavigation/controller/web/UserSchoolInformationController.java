@@ -29,8 +29,8 @@ public class UserSchoolInformationController {
         schoolInformationService.getAllInformation(pageDto);
         return AjaxResult.success("获取成功",pageDto);
     }
-    @PostMapping("/web/schoolInformation/getAllBySchoolId")
-    public AjaxResult getAllInformationBySchoolId(@RequestParam Integer SchoolId, @RequestBody PageDto pageDto)
+    @PostMapping("/web/schoolInformation/getAllBySchoolId/{SchoolId}")
+    public AjaxResult getAllInformationBySchoolId(@PathVariable Integer SchoolId, @RequestBody PageDto pageDto)
     {
         schoolInformationService.getAllInformationBySchoolId(SchoolId,pageDto);
         return AjaxResult.success("获取成功",pageDto);
@@ -41,6 +41,6 @@ public class UserSchoolInformationController {
         pageDto.setPage(1);
         pageDto.setPageSize(10);
         schoolInformationService.getAllInformation(pageDto);
-        return AjaxResult.success();
+        return AjaxResult.success(pageDto);
     }
 }
