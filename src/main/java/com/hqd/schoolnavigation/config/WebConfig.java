@@ -41,7 +41,7 @@ public class WebConfig {
                         "/**"
                 };
                 String[] excPath={
-                        "/admin/admin/login","/web/user/login","/web/school/getAll","/web/school/getLike"
+                        "/admin/admin/login","/web/user/login","/web/school/getAll","/web/school/getLike","/web/user/register"
                 };
 
                 registry.addInterceptor(userSecurityHandlerInterceptor()).addPathPatterns(addPath).excludePathPatterns(excPath);
