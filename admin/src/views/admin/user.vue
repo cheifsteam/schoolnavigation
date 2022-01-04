@@ -16,7 +16,7 @@
         <th>用户登录名</th>
         <th>用户昵称</th>
         <th>用户密码</th>
-        <th>用户头像</th>
+        <th>操作</th>
       </tr>
       </thead>
 
@@ -26,8 +26,15 @@
         <td>{{user.phoneNumber}}</td>
         <td>{{user.nickname}}</td>
         <td>{{user.password}}</td>
-        <td>{{user.img}}</td>
 
+        <td>
+          <div class="hidden-sm hidden-xs btn-group">
+
+            <button v-on:click="del(user.id)" class="btn btn-xs btn-danger">
+              <i class="ace-icon fa fa-trash-o bigger-120"></i>
+            </button>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
@@ -54,9 +61,9 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">用户账号</label>
+                <label class="col-sm-2 control-label">用户手机号</label>
                 <div class="col-sm-10">
-                  <input v-model="user.admin_name" class="form-control">
+                  <input type="tel" pattern="[0-9]{11}" v-model="user.phoneNumber" class="form-control">
                 </div>
               </div>
 
@@ -117,9 +124,9 @@
 
 
               <div class="form-group">
-                <label class="col-sm-2 control-label">用户账号</label>
+                <label class="col-sm-2 control-label">用户手机号</label>
                 <div class="col-sm-10">
-                  <input v-model="user.admin_name" class="form-control">
+                  <input type="tel" pattern="[0-9]{11}" v-model="user.phoneNumber" class="form-control">
                 </div>
               </div>
 

@@ -63,12 +63,6 @@
             <form class="form-horizontal">
 
 
-              <div class="form-group">
-                <label class="col-sm-2 control-label">资讯id</label>
-                <div class="col-sm-10">
-                  <input v-model="shchoolinfo.id" class="form-control">
-                </div>
-              </div>
 
 
               <div class="form-group">
@@ -243,6 +237,14 @@ export default {
       let _this = this;
 
       //_this.shchoolinfo.categorys = categorys;
+      if (1 != 1
+          || !Validator.require(_this.shchoolinfo.title, "资讯题目")
+          || !Validator.require(_this.shchoolinfo.time, "发布时间")
+          || !Validator.require(_this.shchoolinfo.info, "资讯内容")
+          || !Validator.require(_this.shchoolinfo.schoolId, "学校Id")
+      ) {
+        return;
+      }
 
       Loading.show();
       console.log(_this.shchoolinfo);
