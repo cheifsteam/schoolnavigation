@@ -99,6 +99,8 @@ Tool = {
     return SessionStorage.get(SESSION_KEY_LOGIN_USER) || {};
   },
 
+
+
   /**
    * 随机生成[len]长度的[radix]进制数
    * @param len

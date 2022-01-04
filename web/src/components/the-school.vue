@@ -2,8 +2,8 @@
   <div class="card mb-4 shadow-sm school">
     <div class="card-body">
       <h5 class="">{{school.name}}</h5>
-      <h5>学校类型：{{SCHOOL_TYPE | optionKV(school.level)}}</h5>
-      <h5 class="">所在地区：{{school.address}}</h5>
+      <h6>电话：{{school.telephone}}</h6>
+      <h6 class="">地址：{{school.address}}</h6>
 
 
       <div class="d-flex justify-content-between align-items-center">

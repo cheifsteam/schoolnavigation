@@ -25,6 +25,8 @@
       </div>
     </div>
 
+    <hr v-show="level2Id != null">
+
     <div class="skill clearfix">
       <div class="container">
         <div class="row">
@@ -48,7 +50,7 @@
           <div v-for="o in schools" class="col-md-4">
             <the-school v-bind:school="o"></the-school>
           </div>
-          <h3 v-show="schools.length === 0">课程还未上架</h3>
+<!--          <h3 v-show="schools.length === 0">课程还未上架</h3>-->
         </div>
       </div>
     </div>
@@ -65,6 +67,7 @@ export default {
   name: 'list',
   data: function () {
     return {
+      keywords: "",
       schools: [],
       level1: [],
       level2: [],
@@ -78,6 +81,7 @@ export default {
   },
   mounted() {
     let _this = this;
+    _this.keywords = _this.$route.query.keywords;
     _this.$refs.pagination.size = 50;
     _this.listSchool(1);
     _this.all();
@@ -88,22 +92,36 @@ export default {
      */
     listSchool(page) {
       let _this = this;
+      console.log("Makiori:" + _this.keywords)
+      if(_this.keywords === "" || _this.keywords === undefined) {
+        _this.categoryId = _this.level3Id || _this.level2Id || _this.level1Id || "", // 优先取level2Id
 
-      _this.categoryId = _this.level3Id || _this.level2Id || _this.level1Id || "", // 优先取level2Id
-
-      console.log("Makiori:" + _this.$refs.pagination.size)
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/school/getAllSchool/' + this.categoryId, {
-        page: page,
-        pageSize: _this.$refs.pagination.size,
-      }).then((response) => {
-        let resp = response.data;
-        if (resp.code == 200) {
-          _this.schools = resp.data.data;
-          _this.$refs.pagination.render(page, resp.data.total);
-        }
-      }).catch((response) => {
-        console.log("error：", response);
-      })
+            _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/school/getAllSchool/' + _this.categoryId, {
+              page: page,
+              pageSize: _this.$refs.pagination.size,
+            }).then((response) => {
+              let resp = response.data;
+              if (resp.code == 200) {
+                _this.schools = resp.data.data;
+                _this.$refs.pagination.render(page, resp.data.total);
+              }
+            }).catch((response) => {
+              console.log("error：", response);
+            })
+      } else {
+        _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/school/getLike/' + _this.keywords, {
+          page: page,
+          pageSize: _this.$refs.pagination.size,
+        }).then((response)=>{
+          let resp = response.data
+          if (resp.code == 200) {
+            _this.schools = resp.data.data;
+            _this.$refs.pagination.render(page, resp.data.total);
+          }
+        }).catch((response) => {
+          console.log("error：", response);
+        })
+      }
     },
 
 
@@ -132,24 +150,28 @@ export default {
      */
     onClickLevel1(level1Id) {
       let _this = this;
+      _this.keywords = "";
       _this.level2 = [];
       _this.level3 = [];
       _this.level1Id = level1Id;
-      _this.level2Id = null;
-      _this.level3Id = null;
-      if (level1Id === "00000000") {
-        _this.level1Id = null;
-      }
+      _this.level2Id = "";
+      _this.level3Id = "";
 
       //点击一级分类时，显示激活状态
       $("#category-" + level1Id).siblings("a").removeClass("cur");
       $("#category-" + level1Id).addClass("cur");
 
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/category/getSub/' + level1Id).then((response)=> {
-        let resp = response.data
-        _this.level2 = resp.data
+      if (level1Id === '00000000') {
+        _this.level1Id = null;
         this.listSchool(1);
-      })
+
+      } else {
+        _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/category/getSub/' + level1Id).then((response) => {
+          let resp = response.data
+          _this.level2 = resp.data
+          this.listSchool(1);
+        })
+      }
     },
 
 
@@ -160,7 +182,8 @@ export default {
     onClickLevel2(level2Id) {
       let _this = this;
       _this.level2Id = level2Id;
-
+      _this.level3Id = null;
+      _this.keywords = "";
 
       $("#category-" + level2Id).siblings("a").removeClass("on");
       $("#category-" + level2Id).addClass("on");
@@ -179,12 +202,12 @@ export default {
      */
     onClickLevel3(level3Id) {
       let _this = this;
+      _this.keywords = "";
       _this.level3Id = level3Id;
 
       $("#category-" + level3Id).siblings("a").removeClass("on");
       $("#category-" + level3Id).addClass("on");
       this.listSchool(1);
-
     },
   }
 }
