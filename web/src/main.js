@@ -24,7 +24,7 @@ axios.defaults.withCredentials = true;
  */
 axios.interceptors.request.use(function (config) {
   console.log("请求：", config);
-  let token = Tool.getLoginUser().data;
+  let token = Tool.getLoginUser().token;
   if(Tool.isNotEmpty(token))  {
     config.headers.Authorization = token;
     console.log("请求headers增加token:", token);

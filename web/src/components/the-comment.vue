@@ -1,12 +1,10 @@
 <template>
   <div class="comment">
 
-    <div class="row">
-      <div  v-for="o in comments" class="col-md-12">
+    <div class="col-lg-14">
       <div>
-        <h5>用户id: {{o.userId}}</h5>
-        <h5>评论： {{o.content}}</h5>
-      </div>
+        <h5>用户id: {{comment.userId}}</h5>
+        <h5>评论： {{comment.content}}</h5>
         <hr>
       </div>
     </div>
@@ -22,7 +20,6 @@ export default {
 
   props: {
     comment: {},
-    comments: [],
   },
 }
 </script>

@@ -38,12 +38,12 @@
           <div class="register-div" v-show="MODAL_STATUS === STATUS_REGISTER">
             <h3>注&nbsp;&nbsp;册</h3>
             <div class="form-group">
-              <input id="register-mobile" v-model="userRegister.mobile"
+              <input id="register-mobile" v-model="userRegister.phoneNumber"
                      class="form-control" placeholder="手机号">
             </div>
 
             <div class="form-group">
-              <input id="register-name" v-model="userRegister.name"
+              <input id="register-name" v-model="userRegister.nickname"
                      class="form-control" placeholder="昵称">
             </div>
             <div class="form-group">
@@ -51,7 +51,7 @@
                      class="form-control" placeholder="密码" type="password">
             </div>
             <div class="form-group">
-              <input id="register-confirm-password" v-model="userRegister.confirm"
+              <input id="register-confirm-password" v-model="userRegister.passwordConfirm"
                      class="form-control" placeholder="确认密码"
                      name="userRegisterConfirm" type="password">
             </div>
@@ -124,14 +124,20 @@ export default {
     register() {
       let _this = this;
 
+      if(_this.userRegister.passwordConfirm !== _this.userRegister.password) {
+        Toast.warning("密码不一致");
+      }
+
 
       // 调服务端注册接口
-      _this.$ajax.post(process.env.VUE_APP_SERVER + '/business/web/user/register', _this.userRegister).then((response) => {
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/user/register', _this.userRegister).then((response) => {
         let resp = response.data;
-        if (resp.success) {
+        if (resp.code == 200) {
           Toast.success("注册成功");
+          $("#login-modal").modal("hide");
+          _this.userRegister = {};
         } else {
-          Toast.warning(resp.message);
+          Toast.warning(resp.msg);
         }
       })
     },

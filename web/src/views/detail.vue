@@ -32,9 +32,9 @@
           </div>
         </div>
 
-        <div class="col-md-12">
-          <pagination ref="pagination" v-bind:list="listNewInfo"></pagination>
-        </div>
+
+        <pagination ref="pagination" v-bind:list="listNewInfo"></pagination>
+
 
 
         <hr>
@@ -51,7 +51,14 @@
         <hr>
 
 
-          <the-comment v-bind:comments=comments></the-comment>
+
+          <div v-for="o in comments" class="col-md-12">
+            <the-comment v-bind:comment=o></the-comment>
+          </div>
+
+
+
+          <pagination ref="pagination" v-bind:list="listcomment"></pagination>
 
 
 
@@ -141,7 +148,23 @@ export default {
 
     share() {
       let _this = this;
-      console.log(_this.comment)
+      let loginUser = Tool.getLoginUser();
+
+      if(Tool.isEmpty(loginUser)) {
+        Toast.warning("请先登录");
+        return;
+      }
+      _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/user/addComment',{
+        content: _this.comment,
+        schoolId: _this.school.id
+      }).then((response)=> {
+        let resp = response.data
+        Toast.success(resp.msg)
+      }).catch((response)=>{
+        console.log("error：", response);
+      })
+
+      _this.listcomment(1)
     },
 
   }
