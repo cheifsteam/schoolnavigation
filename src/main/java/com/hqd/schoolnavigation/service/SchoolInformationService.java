@@ -28,6 +28,8 @@ import java.util.List;
 public class SchoolInformationService {
     @Resource
     private SchoolInformationMapper schoolInformationMapper;
+    @Resource
+    private SchoolService schoolService;
     private SchoolInformationExample schoolInformationExample;
     public SchoolInformation  getInformation(Integer id)
     {
@@ -36,9 +38,9 @@ public class SchoolInformationService {
         return schoolInformation;
     }
     public void  addInformation(SchoolInformationDto schoolInformationDto){
-        if (schoolInformationDto.getTime()==null)
+        if (schoolService.getSchoolBySchoolId(schoolInformationDto.getSchoolId())==null)
         {
-            schoolInformationDto.setTime(new Date());
+         throw new MyException("该学校不存在");
         }
         final SchoolInformation schoolInformation = BeanCopyUtils.copyBean(schoolInformationDto, SchoolInformation.class);
         schoolInformationMapper.insert(schoolInformation);
@@ -60,6 +62,10 @@ public class SchoolInformationService {
         if (getInformation(schoolInformationDto.getId())==null)
         {
             throw new MyException("该资讯不存在");
+        }
+        if (schoolService.getSchoolBySchoolId(schoolInformationDto.getSchoolId())==null)
+        {
+            throw new MyException("该学校不存在");
         }
         final SchoolInformation schoolInformation = BeanCopyUtils.copyBean(schoolInformationDto, SchoolInformation.class);
         schoolInformationMapper.updateByPrimaryKeySelective(schoolInformation);

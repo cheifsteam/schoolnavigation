@@ -1,1 +1,2 @@
+SCHOOL_NATURE={Publicschool:{key:"A",value:"公办"},Privateschool:{key:"B",value:"民办"}}
 SCHOOL_TYPE={Kindergarten:{key:"K", value:"幼儿园"},Primaryschool:{key:"P", value:"小学"},Middleschool:{key:"M", value:"中学"}, University:{key:"U",value:"大学"}, HigherVocationalColleges:{key:"H",value:"高职高校"}};

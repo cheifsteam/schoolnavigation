@@ -21,6 +21,7 @@
         <th>资讯题目</th>
         <th>发表时间</th>
         <th>内容</th>
+        <th>学校id</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -80,7 +81,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">发布时间</label>
                 <div class="col-sm-10">
-                  <input type="date" v-model="shchoolinfo.time" class="form-control">
+                  <input type="datetime-local" v-model="shchoolinfo.time" class="form-control">
                 </div>
               </div>
 
@@ -143,7 +144,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">发布时间</label>
                 <div class="col-sm-10">
-                  <input v-model="shchoolinfo.time" class="form-control">
+                  <input type="datetime-local" v-model="shchoolinfo.time" class="form-control">
                 </div>
               </div>
 
@@ -249,7 +250,7 @@ export default {
 
         Loading.hide();
         let resp = response.data;
-        if (resp) {
+        if (resp.code==200) {
           $("#form-modal").modal("hide");
           _this.list(1);
           Toast.success("保存成功！");

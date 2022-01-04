@@ -7,6 +7,8 @@ public class Comment {
 
     private String content;
 
+    private Integer schoolId;
+
     public Integer getId() {
         return id;
     }
@@ -29,5 +31,13 @@ public class Comment {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+    }
+
+    public Integer getSchoolId() {
+        return schoolId;
+    }
+
+    public void setSchoolId(Integer schoolId) {
+        this.schoolId = schoolId;
     }
 }

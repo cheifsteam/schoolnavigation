@@ -5,6 +5,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="content" jdbcType="VARCHAR" property="content" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -36,7 +37,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, user_id, content
+    id, user_id, content, school_id
   </sql>
   <select id="selectByExample" parameterType="com.hqd.schoolnavigation.domain.CommentExample" resultMap="BaseResultMap">
     select
@@ -64,10 +65,10 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.hqd.schoolnavigation.domain.Comment">
-    insert into comment (id, user_id, content
-      )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}
-      )
+    insert into comment (id, user_id, content, 
+      school_id)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{content,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=INTEGER})
   </insert>
   <insert id="insertSelective" parameterType="com.hqd.schoolnavigation.domain.Comment">
     insert into comment
@@ -81,6 +82,9 @@
       <if test="content != null">
         content,
       </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -91,6 +95,9 @@
       </if>
       <if test="content != null">
         #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
       </if>
     </trim>
   </insert>
@@ -103,13 +110,17 @@
       <if test="content != null">
         content = #{content,jdbcType=VARCHAR},
       </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
     </set>
     where id = #{id,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.hqd.schoolnavigation.domain.Comment">
     update comment
     set user_id = #{userId,jdbcType=INTEGER},
-      content = #{content,jdbcType=VARCHAR}
+      content = #{content,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

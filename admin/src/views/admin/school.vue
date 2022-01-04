@@ -79,7 +79,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校id</label>
                 <div class="col-sm-10">
-                  <input v-model="school.id" class="form-control">
+                  <input type="number" v-model="school.id" class="form-control">
                 </div>
               </div>
 
@@ -94,15 +94,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校性质</label>
                 <div class="col-sm-10">
-                  <input v-model="school.nature" class="form-control">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label">学校级别</label>
-                <div class="col-sm-10">
-                  <select v-model="school.level" class="form-control">
-                    <option v-for="o in SCHOOL_TYPE" v-bind:value="o.key">{{o.value}}</option>
+                  <select v-model="school.nature" class="form-control">
+                    <option v-for="o in SCHOOL_NATURE" v-bind:value="o.key">{{o.value}}</option>
                   </select>
                 </div>
               </div>
@@ -110,7 +103,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校类型</label>
                 <div class="col-sm-10">
-                  <input v-model="school.type" class="form-control">
+                  <select v-model="school.type" class="form-control">
+                    <option v-for="o in SCHOOL_TYPE" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">学校级别</label>
+                <div class="col-sm-10">
+                  <input v-model="school.level" class="form-control">
                 </div>
               </div>
 
@@ -171,7 +173,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校id</label>
                 <div class="col-sm-10">
-                  <input v-model="school.id" class="form-control" disabled>
+                  <input type="number" v-model="school.id" class="form-control" disabled>
                 </div>
               </div>
 
@@ -186,15 +188,8 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校性质</label>
                 <div class="col-sm-10">
-                  <input v-model="school.nature" class="form-control">
-                </div>
-              </div>
-
-              <div class="form-group">
-                <label class="col-sm-2 control-label">学校级别</label>
-                <div class="col-sm-10">
-                  <select v-model="school.level" class="form-control">
-                    <option v-for="o in SCHOOL_TYPE" v-bind:value="o.key">{{o.value}}</option>
+                  <select v-model="school.nature" class="form-control">
+                    <option v-for="o in SCHOOL_NATURE" v-bind:value="o.key">{{o.value}}</option>
                   </select>
                 </div>
               </div>
@@ -202,7 +197,16 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label">学校类型</label>
                 <div class="col-sm-10">
-                  <input v-model="school.type" class="form-control">
+                  <select v-model="school.type" class="form-control">
+                    <option v-for="o in SCHOOL_TYPE" v-bind:value="o.key">{{o.value}}</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-2 control-label">学校级别</label>
+                <div class="col-sm-10">
+                  <input v-model="school.level" class="form-control">
                 </div>
               </div>
 
@@ -257,6 +261,7 @@ export default {
       tree1: {},
       tree2: {},
       SCHOOL_TYPE: SCHOOL_TYPE,
+      SCHOOL_NATURE:SCHOOL_NATURE,
     }
   },
   mounted: function() {
@@ -345,7 +350,7 @@ export default {
           _this.list(1);
           Toast.success("新增成功！");
         } else {
-          Toast.warning(resp.error)
+          Toast.warning(resp)
         }
       })
     },

@@ -149,14 +149,15 @@
                 </router-link>
                 <b class="arrow"></b>
               </li>
-
-              <li class="" id="admin-file-sidebar">
-                <router-link to="/admin/file">
+              <li class="" id="admin-comment-sidebar">
+                <router-link to="/admin/comment">
                   <i class="menu-icon fa fa-caret-right"></i>
-                  文件管理
+                  评论管理
                 </router-link>
                 <b class="arrow"></b>
               </li>
+
+
 
             </ul>
           </li>

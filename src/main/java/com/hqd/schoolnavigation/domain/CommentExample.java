@@ -293,6 +293,66 @@ public class CommentExample {
             addCriterion("content not between", value1, value2, "content");
             return (Criteria) this;
         }
+
+        public Criteria andSchoolIdIsNull() {
+            addCriterion("school_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdIsNotNull() {
+            addCriterion("school_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdEqualTo(Integer value) {
+            addCriterion("school_id =", value, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdNotEqualTo(Integer value) {
+            addCriterion("school_id <>", value, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdGreaterThan(Integer value) {
+            addCriterion("school_id >", value, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdGreaterThanOrEqualTo(Integer value) {
+            addCriterion("school_id >=", value, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdLessThan(Integer value) {
+            addCriterion("school_id <", value, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdLessThanOrEqualTo(Integer value) {
+            addCriterion("school_id <=", value, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdIn(List<Integer> values) {
+            addCriterion("school_id in", values, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdNotIn(List<Integer> values) {
+            addCriterion("school_id not in", values, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdBetween(Integer value1, Integer value2) {
+            addCriterion("school_id between", value1, value2, "schoolId");
+            return (Criteria) this;
+        }
+
+        public Criteria andSchoolIdNotBetween(Integer value1, Integer value2) {
+            addCriterion("school_id not between", value1, value2, "schoolId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {

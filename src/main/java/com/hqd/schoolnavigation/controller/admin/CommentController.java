@@ -36,5 +36,12 @@ public class CommentController {
         commentService.getAllComment(pageDto);
         return AjaxResult.success("获取成功",pageDto);
     }
+    @PostMapping("/admin/user/getCommentBySchoolId/{schoolId}")
+    public AjaxResult getCommentBySchoolId(@PathVariable Integer schoolId,@RequestBody PageDto pageDto)
+    {
+        commentService.getCommentBySchoolId(schoolId,pageDto);
+        return AjaxResult.success("获取成功",pageDto);
+
+    }
 
 }

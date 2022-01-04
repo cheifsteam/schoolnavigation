@@ -6,6 +6,7 @@ import com.hqd.schoolnavigation.domain.Comment;
 import com.hqd.schoolnavigation.domain.CommentExample;
 import com.hqd.schoolnavigation.dto.CommentDto;
 import com.hqd.schoolnavigation.dto.PageDto;
+import com.hqd.schoolnavigation.excpetion.MyException;
 import com.hqd.schoolnavigation.mapper.CommentMapper;
 import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,10 +28,15 @@ public class CommentService {
     private CommentMapper commentMapper;
     private CommentExample commentExample;
     @Resource
+    private SchoolService schoolService;
+    @Resource
     private HttpSession httpSession;
     public void addComment(CommentDto commentDto)
     {
-
+        if (schoolService.getSchoolBySchoolId(commentDto.getSchoolId())==null)
+        {
+            throw new MyException("该学校不存在");
+        }
         Comment comment = BeanCopyUtils.copyBean(commentDto, Comment.class);
         commentMapper.insert(comment);
     }
@@ -60,6 +66,17 @@ public class CommentService {
         pageDto.setTotal((int) pageInfo.getTotal());
         pageDto.setData(list);
 
+    }
+    public void getCommentBySchoolId(Integer schoolId,PageDto pageDto)
+    {
+        if (schoolService.getSchoolBySchoolId(schoolId)==null)
+        {
+            throw new MyException("该学校不存在");
+        }
+        commentExample=new CommentExample();
+        final CommentExample.Criteria criteria = commentExample.createCriteria().andSchoolIdEqualTo(schoolId);
+        commentExample.or(criteria);
+        commentList(commentExample,pageDto);
     }
 
 }

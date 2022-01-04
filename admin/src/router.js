@@ -8,6 +8,7 @@ import Category from './views/admin/category.vue'
 import Member from './views/admin/member.vue'
 import User from './views/admin/user.vue'
 import Schoolinfo from './views/admin/schoolInfo.vue'
+import Comment from './views/admin/comment.vue'
 
 Vue.use(Router);
 
@@ -54,6 +55,11 @@ export default new Router({
       path: "admin/schoolinfo",
       name: "admin/schoolinfo",
       component: Schoolinfo
-    }]
+    },{
+      path: "admin/comment",
+      name: "admin/comment",
+      component: Comment
+    }
+    ]
   }]
 })
