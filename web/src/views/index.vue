@@ -7,9 +7,6 @@
         <p class="lead text-muted m-3">
           欢迎使用学校导航系统
         </p>
-        <p>
-          <a href="#" class="btn btn-primary my-2 p-3 font-weight-bold">登录进行使用</a>
-        </p>
       </div>
     </section>
 

@@ -19,8 +19,8 @@
 
           <nav class="navbar navbar-light bg-dark">
             <form class="form-inline">
-              <input v-model="school.word" class="form-control mr-sm-2" type="search" placeholder="查询" aria-label="Search">
-              <router-link v-bind:to="'/list?word=' + school.word" class="btn btn-outline-success my-2 my-sm-0">查询</router-link>
+              <input type="text" v-model="keywords" class="form-control mr-sm-2"  placeholder="查询" aria-label="Search">
+              <router-link v-bind:to="'/list?keywords=' + keywords" @click.native="flushCom" class="btn btn-outline-success my-2 my-sm-0">查询</router-link>
             </form>
           </nav>
 
@@ -47,13 +47,13 @@ export default {
     return {
       user:{},
       loginUser: {},
-      school: {},
+      keywords: '',
+
     }
   },
   mounted() {
     let _this = this;
     _this.loginUser = Tool.getLoginUser();
-    console.log(_this.loginUser.data);
   },
   methods: {
     /**
@@ -83,6 +83,18 @@ export default {
         }
       });
     },
+
+    // goSearch () {
+    //   let _this = this;
+    //
+    //   _this.$router.push({path: '/list', query: {keywords: this.keywords}})
+    //   //_this.$router.push('/list/' + this.keywords)
+    //
+    // },
+
+    flushCom () {
+      this.$router.go(0);
+    }
 
   }
 }
