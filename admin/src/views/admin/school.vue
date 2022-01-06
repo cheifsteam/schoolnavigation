@@ -25,6 +25,7 @@
         <th>电话</th>
         <th>地址</th>
         <th>简介</th>
+        <th>学校图片</th>
         <th>操作</th>
       </tr>
       </thead>
@@ -39,6 +40,7 @@
         <td>{{school.telephone}}</td>
         <td>{{school.address}}</td>
         <td>{{school.info}}</td>
+        <td>{{school.img}}</td>
 
         <td>
           <div class="hidden-sm hidden-xs btn-group">
@@ -231,7 +233,14 @@
                 </div>
               </div>
 
+
             </form>
+            <el-upload
+                :http-request="uploadSectionFile">
+              <i class="el-icon-upload"></i>
+              <div class="el-upload__text">将文件拖到此处，或<em>修改头像</em></div>
+              <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过10M</div>
+            </el-upload>
 
           </div>
           <div class="modal-footer">
@@ -274,6 +283,30 @@ export default {
     _this.loginUser = Tool.getLoginUser()
   },
   methods: {
+
+    uploadSectionFile (param) {
+      let form = new FormData()
+      var that = this
+      form.append('id', that.school.id)
+      form.append('file', param.file)
+      form.append('dir', '/img/school/')
+      that.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/updateImg',form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: progressEvent => {
+          that.uploadPercent = (progressEvent.loaded / progressEvent.total * 100) | 0
+        }
+      }).then((res) => {
+        Toast.success("上传成功！");
+        console.log('上传结束')
+        console.log(res)
+      }).catch((err) => {
+        Toast.error("上传错误'");
+        console.log('上传错误')
+        console.log(err)
+      })
+    },
     /**
      * 点击【新增】
      */
@@ -458,6 +491,35 @@ export default {
         }
       })
     },
-  }
+    uploadUrl () {
+
+      return `${process.env.VUE_APP_SERVER}/admin/school/updateImg?id=${_this.school.id}`
+    },
+    handleAvatarSuccess (res, file) {
+
+      if (res.code === 200) {
+        this.imageUrl = URL.createObjectURL(file.raw)
+       Toast.success("修改成功")
+      } else {
+
+        Toast.warning("修改失败")
+
+      }
+    },
+    beforeAvatarUpload (file) {
+      const isJPG = file.type === 'image/jpeg'
+      const isLt2M = file.size / 1024 / 1024 < 10
+      if (!isJPG) {
+        Toast.error('上传头像图片只能是 JPG 格式!')
+      }
+      if (!isLt2M) {
+        Toast.error('上传头像图片大小不能超过 10MB!')
+      }
+      return isJPG && isLt2M
+    }
+  },
 }
 </script>
+<style lang="scss" scoped>
+@import 'src/assets/css/upload.scss';
+</style>

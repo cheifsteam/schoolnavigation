@@ -1,6 +1,7 @@
-<template>
-  <div class="card mb-4 shadow-sm info">
-    <div class="card-body">
+<template >
+  <div >
+
+    <div class="item">
       <router-link v-bind:to="'/infodetail?id=' + info.id" >{{info.title}}</router-link>
     </div>
   </div>

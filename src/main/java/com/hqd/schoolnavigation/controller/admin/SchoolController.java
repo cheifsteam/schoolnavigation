@@ -1,5 +1,6 @@
 package com.hqd.schoolnavigation.controller.admin;
 
+import com.hqd.schoolnavigation.constant.Constants;
 import com.hqd.schoolnavigation.domain.School;
 import com.hqd.schoolnavigation.domain.SchoolCategory;
 import com.hqd.schoolnavigation.dto.PageDto;
@@ -11,9 +12,15 @@ import com.hqd.schoolnavigation.service.SchoolService;
 import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -29,6 +36,22 @@ public class SchoolController {
 
     @Autowired
     public SchoolCategoryService schoolCategoryService;
+    @Configuration
+    public class MyPicConfig implements WebMvcConfigurer {
+        @Override
+        public void addResourceHandlers(ResourceHandlerRegistry registry) {
+            String os = System.getProperty("os.name");
+            if (os.toLowerCase().startsWith("win")) { // windos系统
+                registry.addResourceHandler("/img/school/**")
+                        .addResourceLocations("file:" + Constants.RESOURCE_WIN_PATH + "\\img\\school\\");
+            } else { // MAC、Linux系统
+                registry.addResourceHandler("/img/school/**")
+                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/img/school/");
+                registry.addResourceHandler("/song/**")
+                        .addResourceLocations("file:" + Constants.RESOURCE_MAC_PATH + "/song/");
+            }
+        }
+    }
 
     @RequestMapping("/admin/school/getAll")
     public AjaxResult getAllSchool(@RequestBody(required = false) PageDto pageDto){
@@ -94,6 +117,12 @@ public class SchoolController {
     public AjaxResult listCategory(@PathVariable(value = "schoolId") Integer schoolId) {
         List<SchoolCategory> dtoList = schoolCategoryService.listBySchool(schoolId);
         return AjaxResult.success(dtoList);
+    }
+    @PostMapping("/admin/school/updateImg")
+    public AjaxResult updateUserPic(@RequestParam("id") String id,@RequestParam("file") MultipartFile avatorFile,@RequestParam("dir") String dir) {
+
+
+        return  schoolService.updateImg(avatorFile,dir, Integer.valueOf(id));
     }
 
 }

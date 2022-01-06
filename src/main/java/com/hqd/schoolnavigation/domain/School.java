@@ -1,9 +1,5 @@
 package com.hqd.schoolnavigation.domain;
 
-import com.hqd.schoolnavigation.dto.CategoryDto;
-
-import java.util.List;
-
 public class School {
     private Integer id;
 
@@ -18,6 +14,8 @@ public class School {
     private String telephone;
 
     private String address;
+
+    private String img;
 
     private String info;
 
@@ -75,6 +73,14 @@ public class School {
 
     public void setAddress(String address) {
         this.address = address == null ? null : address.trim();
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img == null ? null : img.trim();
     }
 
     public String getInfo() {

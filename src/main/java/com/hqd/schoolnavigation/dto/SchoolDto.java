@@ -24,6 +24,15 @@ public class SchoolDto {
     private String telephone;
 
     private String address;
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     private String info;
 

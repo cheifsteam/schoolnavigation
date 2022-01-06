@@ -26,7 +26,7 @@
 
 
 
-          <span v-show="loginUser.id" class="text-white pr-3">您好： {{loginUser.nickname}}</span>
+          <span v-show="loginUser.id" class="text-white pr-3">您好：  <router-link class="nav-link" to="/setting"> {{loginUser.nickname}}</router-link></span>
           <button v-show="loginUser.id" v-on:click="logout()" class="btn btn-outline-light my-2 my-sm-0">退出登录</button>
           <button v-show="!loginUser.id" v-on:click="openLoginModal()" class="btn btn-outline-light my-2 my-sm-0">登录/注册</button>
         </div>

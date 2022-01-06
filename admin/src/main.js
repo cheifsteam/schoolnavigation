@@ -3,6 +3,7 @@ import App from './app.vue'
 import router from './router'
 import axios from 'axios'
 import filter from './filter/filter'
+import ElementUI from 'element-ui'
 
 Vue.config.productionTip = false;
 Vue.prototype.$ajax = axios;
@@ -71,3 +72,4 @@ new Vue({
 }).$mount('#app');
 
 console.log("环境：", process.env.NODE_ENV);
+Vue.use(ElementUI)

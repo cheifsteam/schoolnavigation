@@ -6,6 +6,7 @@
     <result column="title" jdbcType="VARCHAR" property="title" />
     <result column="time" jdbcType="TIMESTAMP" property="time" />
     <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="img" jdbcType="VARCHAR" property="img" />
   </resultMap>
   <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.hqd.schoolnavigation.domain.SchoolInformation">
     <result column="info" jdbcType="LONGVARCHAR" property="info" />
@@ -40,7 +41,7 @@
     </where>
   </sql>
   <sql id="Base_Column_List">
-    id, title, time, school_id
+    id, title, time, school_id, img
   </sql>
   <sql id="Blob_Column_List">
     info
@@ -91,9 +92,11 @@
   </delete>
   <insert id="insert" parameterType="com.hqd.schoolnavigation.domain.SchoolInformation">
     insert into school_information (id, title, time, 
-      school_id, info)
+      school_id, img, info
+      )
     values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{time,jdbcType=TIMESTAMP}, 
-      #{schoolId,jdbcType=INTEGER}, #{info,jdbcType=LONGVARCHAR})
+      #{schoolId,jdbcType=INTEGER}, #{img,jdbcType=VARCHAR}, #{info,jdbcType=LONGVARCHAR}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.hqd.schoolnavigation.domain.SchoolInformation">
     insert into school_information
@@ -109,6 +112,9 @@
       </if>
       <if test="schoolId != null">
         school_id,
+      </if>
+      <if test="img != null">
+        img,
       </if>
       <if test="info != null">
         info,
@@ -127,6 +133,9 @@
       <if test="schoolId != null">
         #{schoolId,jdbcType=INTEGER},
       </if>
+      <if test="img != null">
+        #{img,jdbcType=VARCHAR},
+      </if>
       <if test="info != null">
         #{info,jdbcType=LONGVARCHAR},
       </if>
@@ -144,6 +153,9 @@
       <if test="schoolId != null">
         school_id = #{schoolId,jdbcType=INTEGER},
       </if>
+      <if test="img != null">
+        img = #{img,jdbcType=VARCHAR},
+      </if>
       <if test="info != null">
         info = #{info,jdbcType=LONGVARCHAR},
       </if>
@@ -155,6 +167,7 @@
     set title = #{title,jdbcType=VARCHAR},
       time = #{time,jdbcType=TIMESTAMP},
       school_id = #{schoolId,jdbcType=INTEGER},
+      img = #{img,jdbcType=VARCHAR},
       info = #{info,jdbcType=LONGVARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
@@ -162,7 +175,8 @@
     update school_information
     set title = #{title,jdbcType=VARCHAR},
       time = #{time,jdbcType=TIMESTAMP},
-      school_id = #{schoolId,jdbcType=INTEGER}
+      school_id = #{schoolId,jdbcType=INTEGER},
+      img = #{img,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
 </mapper>

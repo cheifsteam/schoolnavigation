@@ -3,7 +3,7 @@
     <div class="header-nav">
       <div class="clearfix">
         <div class="container">
-          <div class="row">
+          <div class="live-palt-item">
             <div class="col-12">
               <a v-on:click="onClickLevel1('00000000')" id="category-00000000" href="javascript:;" class="cur">全部</a>
               <a v-for="o in level1" v-on:click="onClickLevel1(o.id)" v-bind:id="'category-' + o.id" href="javascript:;">{{o.name}}</a>
@@ -15,7 +15,7 @@
 
     <div class="skill clearfix">
       <div class="container">
-        <div class="row">
+        <div class="live-palt-item">
           <div class="col-12">
             <a v-for="o in level2" v-on:click="onClickLevel2(o.id)" v-bind:id="'category-' + o.id" href="javascript:;">{{o.name}}</a>
 
@@ -29,7 +29,7 @@
 
     <div class="skill clearfix">
       <div class="container">
-        <div class="row">
+        <div class="live-palt-item">
           <div class="col-12">
             <a v-for="o in level3" v-on:click="onClickLevel3(o.id)" v-bind:id="'category-' + o.id" href="javascript:;">{{o.name}}</a>
             <div style="clear:both"></div>
@@ -40,14 +40,14 @@
 
     <div class="album py-5 bg-light">
       <div class="container">
-        <div class="row">
+        <div class="live-palt-item">
           <div class="col-md-12">
             <pagination ref="pagination" v-bind:list="listSchool"></pagination>
           </div>
         </div>
         <br>
-        <div class="row">
-          <div v-for="o in schools" class="col-md-4">
+        <div class="live-palt-item">
+          <div v-for="o in schools" class="item-center">
             <the-school v-bind:school="o"></the-school>
           </div>
 <!--          <h3 v-show="schools.length === 0">课程还未上架</h3>-->

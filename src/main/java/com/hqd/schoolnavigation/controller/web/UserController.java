@@ -57,6 +57,12 @@ public class UserController {
         userService.UpdatePassword(userDto);
         return AjaxResult.success("修改密码成功");
     }
+    @PostMapping("/web/user/updateInfo")
+    public AjaxResult UpdateInfo(@RequestBody UserDto userDto)
+    {
+        userService.updateInfo(userDto);
+        return AjaxResult.success("修改用户信息成功");
+    }
     @PostMapping("/web/user/updateImg")
     public AjaxResult UpdateImg(@RequestBody UserDto userDto)
     {

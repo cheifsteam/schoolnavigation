@@ -17,6 +17,15 @@ public class SchoolInformationDto {
     private Integer schoolId;
 
     private String info;
+    private String img;
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img;
+    }
 
     public Integer getId() {
         return id;

@@ -6,11 +6,11 @@
         <div class="card mb-4 shadow-sm school">
 
           <div class="card-body">
-            <h1>学校名字：{{school.name}}</h1>
-            <h1>学校性质：{{school.nature}}</h1>
-            <h1>学校类型：{{SCHOOL_TYPE | optionKV(school.level)}}</h1>
-            <h1>学校地址：{{school.address}}</h1>
-            <h1>学校电话：{{school.telephone}}</h1>
+            <h2>学校名字：{{school.name}}</h2>
+            <h2>学校性质：{{school.nature}}</h2>
+            <h2>学校类型：{{SCHOOL_TYPE | optionKV(school.level)}}</h2>
+            <h2>学校地址：{{school.address}}</h2>
+            <h2>学校电话：{{school.telephone}}</h2>
           </div>
         </div>
 
@@ -18,7 +18,7 @@
         <h1>学校简介</h1>
             <div class="card mb-4 shadow-sm school">
               <div class="card-body">
-                 <h1>{{school.info}}</h1>
+                 <h4>{{school.info}}</h4>
               </div>
             </div>
 
@@ -174,7 +174,20 @@ export default {
 <style>
 .school-head {
 }
-
+h4{
+  font-size: 20px;
+  font-weight: lighter;
+}
+h1{
+  font-size: 20px;
+  font-weight: 600;
+  color: #000000;
+  font-weight: bold;
+}
+h2{
+  font-size: 20px;
+  color: #67757f;
+}
 .school-head h1 {
   font-size: 2rem;
   margin-bottom: 1.5rem;

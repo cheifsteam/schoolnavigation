@@ -11,6 +11,8 @@ public class SchoolInformation {
 
     private Integer schoolId;
 
+    private String img;
+
     private String info;
 
     public Integer getId() {
@@ -43,6 +45,14 @@ public class SchoolInformation {
 
     public void setSchoolId(Integer schoolId) {
         this.schoolId = schoolId;
+    }
+
+    public String getImg() {
+        return img;
+    }
+
+    public void setImg(String img) {
+        this.img = img == null ? null : img.trim();
     }
 
     public String getInfo() {

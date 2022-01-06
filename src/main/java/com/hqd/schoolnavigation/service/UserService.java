@@ -55,6 +55,7 @@ public class UserService {
         HashMap<String,Object> hashMap=new HashMap();
         hashMap.put("id",user.getId());
         hashMap.put("nickname",user.getNickname());
+        hashMap.put("phoneNumber",user.getPhoneNumber());
         hashMap.put("token",token);
         return hashMap;
     }
@@ -126,8 +127,10 @@ public class UserService {
             throw new MyException("两次输入密码不一致");
         }
         //重设混淆盐
+
         user.setSalt(SecurityRandom.getRandom());
-        user.setPassword(userDto.getNewPassword()+user.getSalt());
+        String encryptPassword=Encrypt.MD5Encrypt(userDto.getNewPassword()+user.getSalt());
+        user.setPassword(encryptPassword);
         userMapper.updateByPrimaryKeySelective(user);
     }
     public void  UpdateImg(UserDto userDto){
@@ -172,4 +175,11 @@ public class UserService {
         userMapper.insert(user);
     }
 
+    public void updateInfo(UserDto userDto)
+    {
+        final User user = BeanCopyUtils.copyBean(userDto, User.class);
+        userMapper.updateByPrimaryKeySelective(user);
+
+
+    }
 }
