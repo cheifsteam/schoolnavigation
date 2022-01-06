@@ -24,7 +24,7 @@
         </div>
           <div class="xxsz">
             <div class="z"><strong>学校名字：</strong>{{school.name}}</div>
-            <div class="z"><strong>学校性质：</strong>{{school.nature}}</div>
+            <div class="z"><strong>学校性质：</strong>{{SCHOOL_NATURE | optionKV(school.nature)}}</div>
             <div class="z"><strong>学校类型：</strong>{{SCHOOL_TYPE | optionKV(school.level)}}</div>
             <div class="z"><strong>学校地址：</strong>{{school.address}}</div>
             <div class="z"><strong>学校电话：</strong>{{school.telephone}}</div>
@@ -112,6 +112,7 @@ export default {
       id: "",
       school: {},
       SCHOOL_TYPE: SCHOOL_TYPE,
+      SCHOOL_NATURE:SCHOOL_NATURE,
       infos:[],
       comment:'',
       comments:[],

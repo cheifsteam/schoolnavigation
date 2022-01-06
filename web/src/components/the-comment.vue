@@ -40,7 +40,7 @@ export default {
   },
   methods:{
     attachImageUrl (srcUrl) {
-      return srcUrl ? process.env.VUE_APP_SERVER + srcUrl  : process.env.VUE_APP_SERVER+ '/img/user/user.png'
+      return srcUrl ? process.env.VUE_APP_SERVER + srcUrl || '/img/user/user.png' : process.env.VUE_APP_SERVER+ '/img/user/user.png'
     },
     getUser(id) {
         let _this = this;
