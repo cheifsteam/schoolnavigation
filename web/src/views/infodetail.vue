@@ -1,26 +1,38 @@
 <template>
   <main role="main">
-    <div class="album py-5 bg-light">
-      <div class="card-body">
-        <div class="container">
-          <div class="card mb-4 shadow-sm school">
+    <div>
+      <div class="dqwz">
+        <a class="a" href="/">
+          &nbsp;首页>
+        </a>
+
+        <a>
+          {{info.title}}
+        </a>
+
+      </div>
+    <div class="m1">
+        <div class="m1_z">
+
           <h1>{{info.title}}</h1>
           <h5>发布时间：{{info.time}}</h5>
 
           <h5>{{info.info}}</h5>
           </div>
-        </div>
+
+
+
       </div>
+
     </div>
-    <div class="row">
-      <div v-for="o in infos" class="col-md-12">
-        <the-info v-bind:info="o"></the-info>
-      </div>
-    </div>
+
   </main>
+
 </template>
 
 <script>
+import TheInfo from "@/components/the-info";
+
 export default {
   name: "infodetail",
   data: function () {
@@ -29,6 +41,9 @@ export default {
       info: {},
       infos:[],
     }
+  },
+  components:{
+    TheInfo
   },
   mounted() {
     let _this = this;
@@ -47,6 +62,7 @@ export default {
 
       })
     },
+
     listNewInfo() {
       let _this = this;
       _this.$ajax.post(process.env.VUE_APP_SERVER + '/web/schoolInformation/home').then((response)=>{
@@ -83,4 +99,35 @@ h5{
   margin: 0 20px;
 
 }
+.m1 {
+  width: 1100px;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 15px;
+}
+ .m1_z {
+  width: 770px;
+}
+ .m1_y{
+
+  margin-left: 200px;
+   width: 300px;
+ }
+ .my-con{
+   border-bottom-width: 0;
+   border-bottom-style: none;
+   border-bottom-color: #eee;
+   padding-top: 10px;
+   padding-bottom: 10px;
+ }
+ .my_tit{
+   font-size: 16px;
+   border-bottom-width: 1px;
+   border-bottom-style: solid;
+   border-bottom-color: #eee;
+   margin-bottom: 15px;
+   margin-right: auto;
+   margin-left: auto;
+ }
+
 </style>

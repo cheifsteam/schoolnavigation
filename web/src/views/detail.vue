@@ -1,36 +1,61 @@
 <template>
   <main role="main">
     <div class="album py-5 bg-light">
-      <div class="container">
-        <h1>学校信息</h1>
-        <div class="card mb-4 shadow-sm school">
+      <div class="dqwz">
+        <a class="a" href="/">
+         &nbsp;学校导航系统>
+        </a>
+        <a class="a" href="/list">
+         全部学校>
+          </a>
+        <a>
+          {{school.name}}
+        </a>
 
-          <div class="card-body">
-            <h2>学校名字：{{school.name}}</h2>
-            <h2>学校性质：{{school.nature}}</h2>
-            <h2>学校类型：{{SCHOOL_TYPE | optionKV(school.level)}}</h2>
-            <h2>学校地址：{{school.address}}</h2>
-            <h2>学校电话：{{school.telephone}}</h2>
+      </div>
+      <div class="container">
+
+        <div class="stk">
+          <h1>{{school.name}}</h1>
+        <div class="xxbz">
+          <div class="tp">
+            <img :src=attachImageUrl(school.img) class="pc">
           </div>
         </div>
+          <div class="xxsz">
+            <div class="z"><strong>学校名字：</strong>{{school.name}}</div>
+            <div class="z"><strong>学校性质：</strong>{{school.nature}}</div>
+            <div class="z"><strong>学校类型：</strong>{{SCHOOL_TYPE | optionKV(school.level)}}</div>
+            <div class="z"><strong>学校地址：</strong>{{school.address}}</div>
+            <div class="z"><strong>学校电话：</strong>{{school.telephone}}</div>
 
-            <hr>
-        <h1>学校简介</h1>
-            <div class="card mb-4 shadow-sm school">
-              <div class="card-body">
-                 <h4>{{school.info}}</h4>
-              </div>
+          </div>
+        </div>
+        <div class="stq" style="height: auto !important;">
+
+          <div class="zsbt">
+            <strong>学校简介</strong>
+          </div>
+            <div class="jj">
+
+                 <p>{{school.info}}</p>
             </div>
 
-        <hr>
-        <h1>相关资讯</h1>
-
-
-        <div class="row">
-          <div v-for="o in infos" class="col-md-12">
-            <the-info v-bind:info="o"></the-info>
+        </div>
+        <div class="stq" style="height: auto !important;">
+          <div class="zsbt">
+            <strong>相关资讯</strong>
+          </div>
+          <div class="row">
+            <div v-for="o in infos" class="col-md-12">
+              <the-info v-bind:info="o"></the-info>
+            </div>
           </div>
         </div>
+
+
+
+
 
 
         <pagination ref="pagination" v-bind:list="listNewInfo"></pagination>
@@ -52,9 +77,9 @@
 
 
 
-          <div v-for="o in comments" class="col-md-12">
-            <the-comment v-bind:comment=o></the-comment>
-          </div>
+          <ul v-for="o in comments" class="popular">
+            <li><the-comment v-bind:comment=o></the-comment></li>
+          </ul>
 
 
 
@@ -102,6 +127,9 @@ export default {
   },
 
   methods: {
+    attachImageUrl (srcUrl) {
+      return srcUrl ? process.env.VUE_APP_SERVER + srcUrl  : process.env.VUE_APP_SERVER+ '/img/school/school6.jfif'
+    },
     findSchool() {
       let _this = this;
       _this.$ajax.post(process.env.VUE_APP_SERVER + '/admin/school/get/' + _this.id).then((response) => {
@@ -174,15 +202,108 @@ export default {
 <style>
 .school-head {
 }
+.a{
+  text-decoration: none;
+  color: #1a1a1a;
+}
+.stk{
+
+  height: 311px;
+  border: 1px solid #BDE3FF;
+  padding-bottom: 8px;
+  overflow: hidden;
+}
+.xxbz{
+  float: left;
+  width: 280px;
+  border-right-width: 1px;
+  border-right-style: dotted;
+  border-right-color: #BDE3FF;
+  padding-top: 10px;
+  padding-bottom: 6px;
+}
+.pc{
+  height: 240px;
+  width: 260px;
+}
+.tp{
+  text-align: center;
+  background-color: #FFC;
+  margin-right: auto;
+  margin-left: auto;
+  width: 260px;
+  overflow: hidden;
+  padding: 1px;
+  border: 1px solid #090;
+  height: 240px;
+}
+.xxsz {
+  overflow: hidden;
+  line-height: 20px;
+  line-height: 1.7;
+
+  padding-left: 10px;
+
+}
+.z{
+  height: 2em;
+  line-height: 2em;
+  overflow: hidden;
+  margin-right: 1%;
+  font-size: 20px;
+}
+.stq{
+  border: 1px solid #BDE3FF;
+  padding-bottom: 8px;
+  overflow: hidden;
+  margin-top: 10px;
+}
+.zsbt{
+  font-size: 16px;
+  font-weight: bold;
+  color: #F60;
+  line-height: 33px;
+  height: 33px;
+  clear: both;
+  background-image: url(../assets/img/zsbtbg.gif);
+  background-repeat: repeat-x;
+  background-position: center;
+  width: 98%;
+  background-position: center ;
+
+}
+.jj{
+  line-height: 1.7;
+  padding-top: 12px;
+  padding-bottom: 10px;
+  width: 95%;
+  overflow: hidden;
+  margin-right: auto;
+  margin-left: auto;
+  clear: both;
+}
+.dqwz{
+  margin-left: 270px;
+  line-height: 1.5;
+  padding: 10px;
+  background-color: #FDFDFD;
+}
+
 h4{
   font-size: 20px;
   font-weight: lighter;
 }
 h1{
   font-size: 20px;
-  font-weight: 600;
-  color: #000000;
   font-weight: bold;
+  color: #F60;
+  padding-left: 12px;
+  clear: both;
+  margin: 0;
+  padding-top: 12px;
+  padding-right: 0;
+  padding-bottom: 0;
+  display: block;
 }
 h2{
   font-size: 20px;

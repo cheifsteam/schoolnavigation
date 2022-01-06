@@ -236,7 +236,8 @@
 
             </form>
             <el-upload
-                :http-request="uploadSectionFile">
+                :http-request="uploadSectionFile"
+                :before-upload="beforeAvatarUpload">
               <i class="el-icon-upload"></i>
               <div class="el-upload__text">将文件拖到此处，或<em>修改头像</em></div>
               <div class="el-upload__tip" slot="tip">只能上传jpg/png文件，且不超过10M</div>

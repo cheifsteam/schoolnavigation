@@ -13,10 +13,7 @@
 
         <el-form-item prop="img" label="头像">
         <el-upload
-            drag
-            :action="uploadUrl()"
-            :show-file-list="false"
-            :on-success="handleAvatarSuccess"
+            :http-request="uploadSectionFile"
             :before-upload="beforeAvatarUpload">
           <i class="el-icon-upload"></i>
           <div class="el-upload__text">将文件拖到此处，或<em>修改头像</em></div>
@@ -96,32 +93,42 @@ export default {
     goback () {
       this.$router.go(-1)
     },
-    uploadUrl () {
-      return `${process.env.VUE_APP_SERVER}/web/user/updateImg`
-    },
-    handleAvatarSuccess (res, file) {
-      if (res.code === 1) {
-        this.imageUrl = URL.createObjectURL(file.raw)
-        this.$message({
-          message: '修改成功',
-          type: 'success'
-        })
-      } else {
-        this.notify('修改失败', 'error')
-      }
+    uploadSectionFile (param) {
+      let form = new FormData()
+      var that = this
+      var dir='/img/user/'
+      form.append('file', param.file)
+      form.append('dir', dir)
+      that.$ajax.post(process.env.VUE_APP_SERVER + '/web/user/updateImg',form, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        },
+        onUploadProgress: progressEvent => {
+          that.uploadPercent = (progressEvent.loaded / progressEvent.total * 100) | 0
+        }
+      }).then((res) => {
+        Toast.success("上传成功！");
+        console.log('上传结束')
+        console.log(res)
+      }).catch((err) => {
+        Toast.error("上传错误'");
+        console.log('上传错误')
+        console.log(err)
+      })
     },
     beforeAvatarUpload (file) {
       const isJPG = file.type === 'image/jpeg'
       const isLt2M = file.size / 1024 / 1024 < 10
       if (!isJPG) {
-        this.$message.error('上传头像图片只能是 JPG 格式!')
+        Toast.error('上传头像图片只能是 JPG 格式!')
       }
       if (!isLt2M) {
-        this.$message.error('上传头像图片大小不能超过 10MB!')
+        Toast.error('上传头像图片大小不能超过 10MB!')
       }
       return isJPG && isLt2M
     }
-  }
+  },
+
 
 }
 </script>

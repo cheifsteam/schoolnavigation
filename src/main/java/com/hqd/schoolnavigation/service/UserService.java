@@ -14,9 +14,11 @@ import com.hqd.schoolnavigation.util.copyUtils.BeanCopyUtils;
 import com.hqd.schoolnavigation.util.jwt.WebTokenUtil;
 import com.hqd.schoolnavigation.util.security.Encrypt;
 import com.hqd.schoolnavigation.util.security.SecurityRandom;
+import com.hqd.schoolnavigation.util.upload.Upload;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -56,6 +58,7 @@ public class UserService {
         hashMap.put("id",user.getId());
         hashMap.put("nickname",user.getNickname());
         hashMap.put("phoneNumber",user.getPhoneNumber());
+        hashMap.put("img",user.getImg());
         hashMap.put("token",token);
         return hashMap;
     }
@@ -133,19 +136,24 @@ public class UserService {
         user.setPassword(encryptPassword);
         userMapper.updateByPrimaryKeySelective(user);
     }
-    public void  UpdateImg(UserDto userDto){
+    public String updateImg(MultipartFile file,String dir){
         Integer id = (Integer) httpSession.getAttribute("id");
         User user = userMapper.selectByPrimaryKey(id);
         if (user==null)
         {
             throw new MyException("用户不存在");
         }
-        if (userDto.getImg()==null)
-        {
-            throw new MyException("新头像不能为空");
+        String dest="D:\\java项目\\school\\schoolnavigation\\src\\img\\user";
+        try {
+            System.out.println("upload start = " + System.currentTimeMillis());
+            String videoUrl = Upload.uploadFile(file, dest);
+            user.setImg(dir+videoUrl);
+            userMapper.updateByPrimaryKeySelective(user);
+            System.out.println("upload end = " + System.currentTimeMillis());
+            return videoUrl;
+        } catch (Exception var3) {
+            throw new MyException(var3.getMessage());
         }
-        user.setImg(userDto.getImg());
-        userMapper.updateByPrimaryKeySelective(user);
     }
     public void Register(UserDto userDto){
         if (getUserByPhoneNumber(userDto.getPhoneNumber())!=null)
@@ -180,6 +188,12 @@ public class UserService {
         final User user = BeanCopyUtils.copyBean(userDto, User.class);
         userMapper.updateByPrimaryKeySelective(user);
 
+
+    }
+    public User getUserById(Integer id)
+    {
+        final User user = userMapper.selectByPrimaryKey(id);
+        return user;
 
     }
 }

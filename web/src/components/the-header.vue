@@ -26,7 +26,9 @@
 
 
 
-          <span v-show="loginUser.id" class="text-white pr-3">您好：  <router-link class="nav-link" to="/setting"> {{loginUser.nickname}}</router-link></span>
+          <span v-show="loginUser.id" class="text-white pr-3">  <router-link class="nav-link" to="/setting"> <div class="header-right"><div id="user">
+         <img :src=attachImageUrl(loginUser.img) alt="">
+          </div></div></router-link></span>
           <button v-show="loginUser.id" v-on:click="logout()" class="btn btn-outline-light my-2 my-sm-0">退出登录</button>
           <button v-show="!loginUser.id" v-on:click="openLoginModal()" class="btn btn-outline-light my-2 my-sm-0">登录/注册</button>
         </div>
@@ -40,9 +42,11 @@
 <script>
 
 import TheLogin from "./login"
+
 export default {
   name: 'theHeader',
   components: {TheLogin},
+
   data: function () {
     return {
       user:{},
@@ -56,6 +60,9 @@ export default {
     _this.loginUser = Tool.getLoginUser();
   },
   methods: {
+    attachImageUrl (srcUrl) {
+      return srcUrl ? process.env.VUE_APP_SERVER + srcUrl  : process.env.VUE_APP_SERVER+ '/img/user/user.png'
+    },
     /**
      * 打开登录注册窗口
      */
@@ -99,3 +106,6 @@ export default {
   }
 }
 </script>
+<style lang="scss" scoped>
+@import 'src/assets/css/the-header.scss';
+</style>

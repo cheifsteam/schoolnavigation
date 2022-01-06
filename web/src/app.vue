@@ -6,6 +6,7 @@
 
     <the-footer></the-footer>
   </div>
+
 </template>
 
 <script>

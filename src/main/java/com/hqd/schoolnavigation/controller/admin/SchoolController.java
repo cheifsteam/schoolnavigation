@@ -120,9 +120,9 @@ public class SchoolController {
     }
     @PostMapping("/admin/school/updateImg")
     public AjaxResult updateUserPic(@RequestParam("id") String id,@RequestParam("file") MultipartFile avatorFile,@RequestParam("dir") String dir) {
+         String path = schoolService.updateImg(avatorFile, dir, Integer.valueOf(id));
 
-
-        return  schoolService.updateImg(avatorFile,dir, Integer.valueOf(id));
+        return AjaxResult.success("上传成功",path);
     }
 
 }
